@@ -34,7 +34,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Program Files/leJOS EV3/lib/ev3/ev3classes.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/leJOS EV3/lib/ev3/ev3classes.jar" sourcepath="C:/Program Files/leJOS EV3/lib/ev3/ev3classes-src.zip"/>
 	<classpathentry kind="lib" path="C:/Program Files/leJOS EV3/lib/ev3/ev3classes-src.zip"/>
 	<classpathentry kind="lib" path="C:/Program Files/leJOS EV3/lib/pc/ev3tools.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files/leJOS EV3/lib/pc/ev3tools-src.zip"/>

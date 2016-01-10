@@ -2,24 +2,53 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeCaching">
   <process id="mainProcess" name="Main Process" isExecutable="true">
     <startEvent id="startEvent" name="Start"></startEvent>
-    <serviceTask id="motorB" name="Motor B" activiti:class="com.videaps.cube.finder.MotorB"></serviceTask>
+    <serviceTask id="leftMotor" name="Left Motor" activiti:class="com.videaps.cube.finder.Motor">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorType">
+          <activiti:string><![CDATA[L]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationCount">
+          <activiti:string><![CDATA[1]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
     <endEvent id="endEvent" name="End"></endEvent>
     <sequenceFlow id="flow2" sourceRef="parallelgateway2" targetRef="endEvent"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
-    <sequenceFlow id="flow4" sourceRef="motorC" targetRef="parallelgateway2"></sequenceFlow>
-    <serviceTask id="motorC" name="Motor C" activiti:class="com.videaps.cube.finder.MotorC"></serviceTask>
-    <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="motorC"></sequenceFlow>
-    <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="motorB"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="leftMotor" targetRef="parallelgateway2"></sequenceFlow>
+    <serviceTask id="rightMotor" name="Right Motor" activiti:class="com.videaps.cube.finder.Motor">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorType">
+          <activiti:string><![CDATA[L]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationCount">
+          <activiti:string><![CDATA[1]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rightMotor"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="leftMotor"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="startEvent" targetRef="parallelgateway1"></sequenceFlow>
-    <sequenceFlow id="flow8" sourceRef="motorC" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="rightMotor" targetRef="parallelgateway2"></sequenceFlow>
+    <dataObject id="host" name="host" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <activiti:value>192.168.173.85</activiti:value>
+      </extensionElements>
+    </dataObject>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_mainProcess">
     <bpmndi:BPMNPlane bpmnElement="mainProcess" id="BPMNPlane_mainProcess">
       <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
         <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="motorB" id="BPMNShape_motorB">
+      <bpmndi:BPMNShape bpmnElement="leftMotor" id="BPMNShape_leftMotor">
         <omgdc:Bounds height="55.0" width="105.0" x="220.0" y="110.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
@@ -31,7 +60,7 @@
       <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
         <omgdc:Bounds height="40.0" width="40.0" x="440.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="motorC" id="BPMNShape_motorC">
+      <bpmndi:BPMNShape bpmnElement="rightMotor" id="BPMNShape_rightMotor">
         <omgdc:Bounds height="55.0" width="105.0" x="222.0" y="270.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
@@ -39,7 +68,7 @@
         <omgdi:waypoint x="860.0" y="207.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="274.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="325.0" y="137.0"></omgdi:waypoint>
         <omgdi:waypoint x="460.0" y="137.0"></omgdi:waypoint>
         <omgdi:waypoint x="460.0" y="210.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
