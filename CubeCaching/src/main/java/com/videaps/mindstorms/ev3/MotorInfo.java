@@ -33,6 +33,12 @@ public class MotorInfo<K, V> {
 		this.type = type;
 	}
 
+	
+	@Override
+	public String toString() {
+		return port + "-" + type;
+	}
+
 	public K getPort() {
 		return this.port;
 	}

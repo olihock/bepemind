@@ -13,7 +13,7 @@ import org.activiti.engine.test.ActivitiRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class ProcessTestMainProcess {
+public class ProcessTestCubeFinder {
 
 	private String filename = ProcessTestConfig.FILENAME;
 
@@ -23,12 +23,12 @@ public class ProcessTestMainProcess {
 	@Test
 	public void startProcess() throws Exception {
 		RepositoryService repositoryService = activitiRule.getRepositoryService();
-		repositoryService.createDeployment().addInputStream("mainProcess.bpmn20.xml",
+		repositoryService.createDeployment().addInputStream("cubeFinder.bpmn20.xml",
 				new FileInputStream(filename)).deploy();
 		RuntimeService runtimeService = activitiRule.getRuntimeService();
 		Map<String, Object> variableMap = new HashMap<String, Object>();
 		variableMap.put("name", "Activiti");
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("mainProcess", variableMap);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("cubeFinder", variableMap);
 		assertNotNull(processInstance.getId());
 		System.out.println("id " + processInstance.getId() + " "
 				+ processInstance.getProcessDefinitionId());

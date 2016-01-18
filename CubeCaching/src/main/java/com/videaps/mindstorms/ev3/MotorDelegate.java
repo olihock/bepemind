@@ -22,8 +22,6 @@ import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.impl.el.FixedValue;
 
-import lejos.robotics.RegulatedMotor;
-
 
 /**
  * Motor delegate class to implement Activiti Service Task activity.
@@ -35,10 +33,9 @@ import lejos.robotics.RegulatedMotor;
  *
  */
 public class MotorDelegate implements JavaDelegate {
-	private static final Logger logger = Logger.getLogger("com.videaps.mindstorms.ev3");
+	private static final Logger logger = Logger.getLogger(MotorDelegate.class.getName());
 	
 	private FixedValue motorPort;
-	private FixedValue motorType;
 	private FixedValue rotationCount;
 
 	@Override
@@ -46,12 +43,9 @@ public class MotorDelegate implements JavaDelegate {
 		logger.finest("entering");
 		
 		String motorPortValue = ""+motorPort.getValue(execution);
-		String motorTypeValue = ""+motorType.getValue(execution);
 		int rotationCountValue = Integer.valueOf(""+rotationCount.getValue(execution));
 
-		MotorInfo<String, String> motorInfo = new MotorInfo<String, String>(motorPortValue, motorTypeValue);
-		RegulatedMotor motor = BrickSingleton.getInstance(motorInfo).getRegulatedMotor(motorPortValue);
-		motor.rotate(rotationCountValue*360, true);
+		SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue*360, true);
 		
 		logger.finest("exiting");
 	}
