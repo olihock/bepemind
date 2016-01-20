@@ -2,7 +2,7 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeFinder">
   <process id="cubeFinder" name="Cube Finder" isExecutable="true">
     <startEvent id="startEvent" name="Start"></startEvent>
-    <serviceTask id="leftMotor" name="Left Motor" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+    <serviceTask id="leftMotor" name="Start Motor B" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
       <extensionElements>
         <activiti:field name="motorPort">
           <activiti:string><![CDATA[B]]></activiti:string>
@@ -13,10 +13,10 @@
       </extensionElements>
     </serviceTask>
     <endEvent id="endEvent" name="End"></endEvent>
-    <sequenceFlow id="flow2" sourceRef="cleanUp" targetRef="endEvent"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="shutdownCubeFinder" targetRef="endEvent"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
-    <serviceTask id="rightMotor" name="Right Motor" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+    <serviceTask id="startMotorC" name="Start Motor C" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
       <extensionElements>
         <activiti:field name="motorPort">
           <activiti:string><![CDATA[C]]></activiti:string>
@@ -26,11 +26,11 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rightMotor"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="startMotorC"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="leftMotor"></sequenceFlow>
-    <sequenceFlow id="flow7" sourceRef="startEvent" targetRef="initialise"></sequenceFlow>
-    <serviceTask id="cleanUp" name="Clean Up" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
-    <serviceTask id="initialise" name="Initialise" activiti:class="com.videaps.cubefinder.Initialiser">
+    <sequenceFlow id="flow7" sourceRef="startEvent" targetRef="initialiseCubeFinder"></sequenceFlow>
+    <serviceTask id="shutdownCubeFinder" name="Shutdown Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
+    <serviceTask id="initialiseCubeFinder" name="Initialise Cube Finder" activiti:class="com.videaps.cubefinder.Initialiser">
       <extensionElements>
         <activiti:field name="motorA">
           <activiti:string><![CDATA[M]]></activiti:string>
@@ -43,15 +43,15 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
+    <sequenceFlow id="flow8" sourceRef="leftMotor" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="startMotorC" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="parallelgateway2" targetRef="shutdownCubeFinder"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="initialiseCubeFinder" targetRef="parallelgateway1"></sequenceFlow>
     <dataObject id="host" name="host" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>192.168.173.31</activiti:value>
+        <activiti:value>192.168.173.222</activiti:value>
       </extensionElements>
     </dataObject>
-    <sequenceFlow id="flow8" sourceRef="leftMotor" targetRef="parallelgateway2"></sequenceFlow>
-    <sequenceFlow id="flow9" sourceRef="rightMotor" targetRef="parallelgateway2"></sequenceFlow>
-    <sequenceFlow id="flow10" sourceRef="parallelgateway2" targetRef="cleanUp"></sequenceFlow>
-    <sequenceFlow id="flow11" sourceRef="initialise" targetRef="parallelgateway1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_cubeFinder">
     <bpmndi:BPMNPlane bpmnElement="cubeFinder" id="BPMNPlane_cubeFinder">
@@ -65,18 +65,18 @@
         <omgdc:Bounds height="35.0" width="35.0" x="880.0" y="139.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="316.0" y="147.0"></omgdc:Bounds>
+        <omgdc:Bounds height="40.0" width="40.0" x="350.0" y="155.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
-        <omgdc:Bounds height="40.0" width="40.0" x="600.0" y="136.0"></omgdc:Bounds>
+        <omgdc:Bounds height="40.0" width="40.0" x="490.0" y="155.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="rightMotor" id="BPMNShape_rightMotor">
+      <bpmndi:BPMNShape bpmnElement="startMotorC" id="BPMNShape_startMotorC">
         <omgdc:Bounds height="55.0" width="105.0" x="392.0" y="230.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="cleanUp" id="BPMNShape_cleanUp">
+      <bpmndi:BPMNShape bpmnElement="shutdownCubeFinder" id="BPMNShape_shutdownCubeFinder">
         <omgdc:Bounds height="55.0" width="105.0" x="710.0" y="129.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="initialise" id="BPMNShape_initialise">
+      <bpmndi:BPMNShape bpmnElement="initialiseCubeFinder" id="BPMNShape_initialiseCubeFinder">
         <omgdc:Bounds height="55.0" width="105.0" x="150.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
@@ -84,13 +84,13 @@
         <omgdi:waypoint x="880.0" y="156.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="336.0" y="187.0"></omgdi:waypoint>
-        <omgdi:waypoint x="336.0" y="257.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="369.0" y="257.0"></omgdi:waypoint>
         <omgdi:waypoint x="392.0" y="257.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
-        <omgdi:waypoint x="336.0" y="147.0"></omgdi:waypoint>
-        <omgdi:waypoint x="336.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="369.0" y="97.0"></omgdi:waypoint>
         <omgdi:waypoint x="390.0" y="97.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
@@ -99,21 +99,21 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
         <omgdi:waypoint x="495.0" y="97.0"></omgdi:waypoint>
-        <omgdi:waypoint x="620.0" y="97.0"></omgdi:waypoint>
-        <omgdi:waypoint x="620.0" y="136.0"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="155.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
         <omgdi:waypoint x="497.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="620.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="620.0" y="176.0"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="257.0"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="195.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
-        <omgdi:waypoint x="640.0" y="156.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="175.0"></omgdi:waypoint>
         <omgdi:waypoint x="710.0" y="156.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
         <omgdi:waypoint x="255.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="316.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="350.0" y="175.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
