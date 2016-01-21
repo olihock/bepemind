@@ -50,30 +50,30 @@ public class Initialiser implements JavaDelegate {
 		String hostVar = ""+execution.getVariable("host");
 		logger.finer("hostVar="+hostVar);
 		
-		SingletonEV3.intitialise(hostVar);
+		SingletonEV3 ev3 = SingletonEV3.intitialise(hostVar);
 
 		char typeA = (""+motorA.getValue(execution)).toCharArray()[0];
 		try {
-			SingletonEV3.getInstance().createRegulatedMotor("A", typeA);
+			ev3.createRegulatedMotor("A", typeA);
 		} catch(DeviceException e) {
 			logger.info("Motor A: "+e.getMessage());
 		}
 		
 		char typeB = (""+motorB.getValue(execution)).toCharArray()[0];
 		try {
-			SingletonEV3.getInstance().createRegulatedMotor("B", typeB);
+			ev3.createRegulatedMotor("B", typeB);
 		} catch(DeviceException e) {
 			logger.info("Motor B: "+e.getMessage());
 		}
 
 		char typeC = (""+motorC.getValue(execution)).toCharArray()[0];
 		try {
-			SingletonEV3.getInstance().createRegulatedMotor("C", typeC);
+			ev3.createRegulatedMotor("C", typeC);
 		} catch(DeviceException e) {
 			logger.info("Motor C: "+e.getMessage());
 		}
 
-		// TODO Oliver Initialise sensor port here.
+		ev3.createSampleProvider("S1", "lejos.hardware.sensor.EV3IRSensor", "Distance");
 		
 		logger.finest("exiting");
 	}

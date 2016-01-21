@@ -10,10 +10,13 @@
         <activiti:field name="rotationCount">
           <activiti:string><![CDATA[1]]></activiti:string>
         </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[start]]></activiti:string>
+        </activiti:field>
       </extensionElements>
     </serviceTask>
     <endEvent id="endEvent" name="End"></endEvent>
-    <sequenceFlow id="flow2" sourceRef="shutdownCubeFinder" targetRef="endEvent"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="cleanUpCubeFinder" targetRef="endEvent"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
     <serviceTask id="startMotorC" name="Start Motor C" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
@@ -24,12 +27,15 @@
         <activiti:field name="rotationCount">
           <activiti:string><![CDATA[1]]></activiti:string>
         </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[start]]></activiti:string>
+        </activiti:field>
       </extensionElements>
     </serviceTask>
     <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="startMotorC"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="leftMotor"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="startEvent" targetRef="initialiseCubeFinder"></sequenceFlow>
-    <serviceTask id="shutdownCubeFinder" name="Shutdown Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
+    <serviceTask id="cleanUpCubeFinder" name="Clean Up Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
     <serviceTask id="initialiseCubeFinder" name="Initialise Cube Finder" activiti:class="com.videaps.cubefinder.Initialiser">
       <extensionElements>
         <activiti:field name="motorA">
@@ -45,11 +51,46 @@
     </serviceTask>
     <sequenceFlow id="flow8" sourceRef="leftMotor" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow9" sourceRef="startMotorC" targetRef="parallelgateway2"></sequenceFlow>
-    <sequenceFlow id="flow10" sourceRef="parallelgateway2" targetRef="shutdownCubeFinder"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="parallelgateway4" targetRef="cleanUpCubeFinder"></sequenceFlow>
     <sequenceFlow id="flow11" sourceRef="initialiseCubeFinder" targetRef="parallelgateway1"></sequenceFlow>
+    <serviceTask id="descryCube" name="Descry Cube" activiti:class="com.videaps.mindstorms.ev3.SensorDelegate">
+      <extensionElements>
+        <activiti:field name="stopDistance">
+          <activiti:string><![CDATA[5]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow12" sourceRef="parallelgateway2" targetRef="descryCube"></sequenceFlow>
+    <serviceTask id="stopMotorB" name="Stop Motor B" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[stop]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="stopMotorC" name="Stop Motor C" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[stop]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <parallelGateway id="parallelgateway3" name="Parallel Gateway"></parallelGateway>
+    <parallelGateway id="parallelgateway4" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow13" sourceRef="descryCube" targetRef="parallelgateway3"></sequenceFlow>
+    <sequenceFlow id="flow14" sourceRef="parallelgateway3" targetRef="stopMotorB"></sequenceFlow>
+    <sequenceFlow id="flow15" sourceRef="parallelgateway3" targetRef="stopMotorC"></sequenceFlow>
+    <sequenceFlow id="flow16" sourceRef="stopMotorB" targetRef="parallelgateway4"></sequenceFlow>
+    <sequenceFlow id="flow17" sourceRef="stopMotorC" targetRef="parallelgateway4"></sequenceFlow>
     <dataObject id="host" name="host" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>192.168.173.222</activiti:value>
+        <activiti:value>192.168.173.211</activiti:value>
       </extensionElements>
     </dataObject>
   </process>
@@ -59,61 +100,105 @@
         <omgdc:Bounds height="35.0" width="35.0" x="48.0" y="150.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="leftMotor" id="BPMNShape_leftMotor">
-        <omgdc:Bounds height="55.0" width="105.0" x="390.0" y="70.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="230.0" y="70.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
         <omgdc:Bounds height="35.0" width="35.0" x="880.0" y="139.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
-        <omgdc:Bounds height="40.0" width="40.0" x="350.0" y="155.0"></omgdc:Bounds>
+        <omgdc:Bounds height="40.0" width="40.0" x="180.0" y="124.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
-        <omgdc:Bounds height="40.0" width="40.0" x="490.0" y="155.0"></omgdc:Bounds>
+        <omgdc:Bounds height="40.0" width="40.0" x="340.0" y="124.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="startMotorC" id="BPMNShape_startMotorC">
-        <omgdc:Bounds height="55.0" width="105.0" x="392.0" y="230.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="230.0" y="167.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="shutdownCubeFinder" id="BPMNShape_shutdownCubeFinder">
-        <omgdc:Bounds height="55.0" width="105.0" x="710.0" y="129.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="cleanUpCubeFinder" id="BPMNShape_cleanUpCubeFinder">
+        <omgdc:Bounds height="55.0" width="105.0" x="800.0" y="40.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="initialiseCubeFinder" id="BPMNShape_initialiseCubeFinder">
-        <omgdc:Bounds height="55.0" width="105.0" x="150.0" y="140.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="48.0" y="221.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="descryCube" id="BPMNShape_descryCube">
+        <omgdc:Bounds height="55.0" width="105.0" x="410.0" y="117.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stopMotorB" id="BPMNShape_stopMotorB">
+        <omgdc:Bounds height="55.0" width="105.0" x="610.0" y="160.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="stopMotorC" id="BPMNShape_stopMotorC">
+        <omgdc:Bounds height="55.0" width="105.0" x="610.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway3" id="BPMNShape_parallelgateway3">
+        <omgdc:Bounds height="40.0" width="40.0" x="550.0" y="214.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway4" id="BPMNShape_parallelgateway4">
+        <omgdc:Bounds height="40.0" width="40.0" x="730.0" y="214.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="815.0" y="156.0"></omgdi:waypoint>
-        <omgdi:waypoint x="880.0" y="156.0"></omgdi:waypoint>
+        <omgdi:waypoint x="852.0" y="95.0"></omgdi:waypoint>
+        <omgdi:waypoint x="897.0" y="139.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="370.0" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="369.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="392.0" y="257.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="164.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="194.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
-        <omgdi:waypoint x="370.0" y="155.0"></omgdi:waypoint>
-        <omgdi:waypoint x="369.0" y="97.0"></omgdi:waypoint>
-        <omgdi:waypoint x="390.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="124.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="97.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
-        <omgdi:waypoint x="83.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="150.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="65.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="100.0" y="221.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
-        <omgdi:waypoint x="495.0" y="97.0"></omgdi:waypoint>
-        <omgdi:waypoint x="510.0" y="97.0"></omgdi:waypoint>
-        <omgdi:waypoint x="510.0" y="155.0"></omgdi:waypoint>
+        <omgdi:waypoint x="335.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="97.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="124.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
-        <omgdi:waypoint x="497.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="510.0" y="257.0"></omgdi:waypoint>
-        <omgdi:waypoint x="510.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="335.0" y="194.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="194.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="164.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
-        <omgdi:waypoint x="530.0" y="175.0"></omgdi:waypoint>
-        <omgdi:waypoint x="710.0" y="156.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="214.0"></omgdi:waypoint>
+        <omgdi:waypoint x="852.0" y="95.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
-        <omgdi:waypoint x="255.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="350.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="100.0" y="221.0"></omgdi:waypoint>
+        <omgdi:waypoint x="200.0" y="164.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="380.0" y="144.0"></omgdi:waypoint>
+        <omgdi:waypoint x="410.0" y="144.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="462.0" y="172.0"></omgdi:waypoint>
+        <omgdi:waypoint x="462.0" y="233.0"></omgdi:waypoint>
+        <omgdi:waypoint x="550.0" y="234.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="570.0" y="214.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="570.0" y="254.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="715.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="214.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+        <omgdi:waypoint x="715.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="254.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

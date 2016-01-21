@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lejos.remote.ev3.RMIRegulatedMotor;
+import lejos.remote.ev3.RMISampleProvider;
 import lejos.remote.ev3.RemoteEV3;
 
 
@@ -36,6 +37,7 @@ public class SingletonEV3 extends RemoteEV3 {
 	private static SingletonEV3 instance = null;
 	
 	private Map<String, RMIRegulatedMotor> motorMap = new HashMap<String, RMIRegulatedMotor>();
+	private Map<String, RMISampleProvider> sensorMap = new HashMap<String, RMISampleProvider>();
 	
 	
 	private SingletonEV3(String host) throws RemoteException, MalformedURLException, NotBoundException {
@@ -67,10 +69,25 @@ public class SingletonEV3 extends RemoteEV3 {
 		return motor;
 	}
 	
-	
 	public RMIRegulatedMotor getRegulatedMotor(String portName) {
 		RMIRegulatedMotor motor = motorMap.get(portName);
 		return motor;
+	}
+	
+	
+	@Override
+	public RMISampleProvider createSampleProvider(String portName, String sensorName, String modeName) {
+		RMISampleProvider sensor = sensorMap.get(portName);
+		if(sensor == null) {
+			sensor = super.createSampleProvider(portName, sensorName, modeName);
+			sensorMap.put(portName, sensor);
+		}
+		return sensor;
+	}
+	
+	public RMISampleProvider getSampleProvider(String portName) {
+		RMISampleProvider sensor = sensorMap.get(portName);
+		return sensor;
 	}
 
 }

@@ -28,16 +28,19 @@ import org.activiti.engine.impl.el.FixedValue;
 /**
  * Motor delegate class to implement Activiti Service Task activity.
  * 
- * This delegate reads the motor port (A, B, C or D) of the EV3 brick, type (Large or Medium) 
- * and the number of rotations the motor is supposed to conduct. 
- * 
- * @author Oliver
- *
+ * This delegate reads the motor port (A, B, C or D), motor type (Large or Medium)
+ * and the number of rotations the motor is supposed to conduct from the process
+ * and starts the motor. It stops automatically after the given number of rotations.
  */
 public class MotorDelegate implements JavaDelegate {
 	private static final Logger logger = Logger.getLogger(MotorDelegate.class.getName());
 	
+	public static final String FUNCTION_ROTATE = "rotate";
+	public static final String FUNCTION_START = "start";
+	public static final String FUNCTION_STOP = "stop";
+	
 	private FixedValue motorPort;
+	private FixedValue motorFunction;
 	private FixedValue rotationCount;
 
 	@Override
@@ -45,9 +48,16 @@ public class MotorDelegate implements JavaDelegate {
 		logger.finest("entering");
 		
 		String motorPortValue = ""+motorPort.getValue(execution);
-		int rotationCountValue = Integer.valueOf(""+rotationCount.getValue(execution));
+		String motorFunctionValue = ""+motorFunction.getValue(execution);
 
-		SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue*360, true);
+		if(FUNCTION_ROTATE.equals(motorFunctionValue)) {
+			int rotationCountValue = Integer.valueOf(""+rotationCount.getValue(execution));
+			SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue*360, true);
+		} else if(FUNCTION_START.equals(motorFunctionValue)) {
+			SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).forward();
+		} else if(FUNCTION_STOP.equals(motorFunctionValue)) {
+			SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).stop(true);
+		}
 		
 		logger.finest("exiting");
 	}

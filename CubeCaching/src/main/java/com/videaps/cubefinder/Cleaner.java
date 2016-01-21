@@ -23,11 +23,16 @@ import org.activiti.engine.delegate.JavaDelegate;
 
 import com.videaps.mindstorms.ev3.SingletonEV3;
 
+
+/**
+ *
+ */
 public class Cleaner implements JavaDelegate {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		
+		SingletonEV3.getInstance().getSampleProvider("S1").close();
 		
 		while(SingletonEV3.getInstance().getRegulatedMotor("A").isMoving()) {
 		}

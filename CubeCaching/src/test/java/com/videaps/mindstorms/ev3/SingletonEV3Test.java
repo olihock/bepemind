@@ -34,7 +34,7 @@ import lejos.remote.ev3.RemoteEV3;
 
 public class SingletonEV3Test {
 
-	private final String host = "192.168.173.222";
+	private final String host = "192.168.173.211";
 	
 	@Test
 	public void test() throws NotBoundException, RemoteException, MalformedURLException {
@@ -76,7 +76,7 @@ public class SingletonEV3Test {
 		SingletonEV3 ev3 = SingletonEV3.intitialise(host);
 		RMISampleProvider sampleProvider = ev3.createSampleProvider("S1", "lejos.hardware.sensor.EV3IRSensor", "Distance");
 		
-		for(int i = 0; i < 25; i++) {
+		for(int i = 0; i < 50; i++) {
 			float[] samples = sampleProvider.fetchSample();
 			for(float sample : samples) {
 				System.out.println(sample);
@@ -97,10 +97,22 @@ public class SingletonEV3Test {
 		EV3IRSensor sensor = new EV3IRSensor(port);
 		List<String> modes = sensor.getAvailableModes();
 		System.out.println(modes);
-		System.out.println("mode="+sensor.getCurrentMode());
+		System.out.println("mode="+sensor.getMode("Seek"));
+		System.out.println("currentMode="+sensor.getCurrentMode());
 		sensor.setCurrentMode("Seek");
-		System.out.println("mode="+sensor.getCurrentMode());
+		System.out.println("currentMode="+sensor.getCurrentMode());
+		float[] samples = new float[sensor.sampleSize()];
+		sensor.fetchSample(samples, 0);
+		for(float sample : samples) {
+			System.out.print(sample+" ");
+		}
 		
 		sensor.close();
+	}
+	
+	
+	@Test
+	public void testRange() {
+		
 	}
 }
