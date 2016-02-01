@@ -44,10 +44,14 @@ public class SensorDelegate implements JavaDelegate {
 		float stopDistanceValue = Float.valueOf(""+stopDistance.getValue(execution));
 		float currentDistance = stopDistanceValue + 1;
 
+		RMISampleProvider sampleProvider = SingletonEV3.getInstance().getSampleProvider("S1");
+
 		while(currentDistance > stopDistanceValue) {
-			RMISampleProvider sampleProvider = SingletonEV3.getInstance().getSampleProvider("S1");
-			currentDistance = sampleProvider.fetchSample()[0];
 			logger.finer("currentDistance="+currentDistance);
+			logger.finer("stopDistanceValue="+stopDistanceValue);
+			
+			currentDistance = sampleProvider.fetchSample()[0];
+
 			Delay.msDelay(100);
 		}
 	}

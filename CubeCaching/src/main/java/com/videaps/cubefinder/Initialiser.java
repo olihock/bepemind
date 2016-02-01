@@ -27,6 +27,7 @@ import org.activiti.engine.impl.el.FixedValue;
 import com.videaps.mindstorms.ev3.SingletonEV3;
 
 import lejos.hardware.DeviceException;
+import lejos.remote.ev3.RMIRegulatedMotor;
 
 
 /**
@@ -61,14 +62,16 @@ public class Initialiser implements JavaDelegate {
 		
 		char typeB = (""+motorB.getValue(execution)).toCharArray()[0];
 		try {
-			ev3.createRegulatedMotor("B", typeB);
+			RMIRegulatedMotor motor = ev3.createRegulatedMotor("B", typeB);
+			motor.setAcceleration(360);
 		} catch(DeviceException e) {
 			logger.info("Motor B: "+e.getMessage());
 		}
 
 		char typeC = (""+motorC.getValue(execution)).toCharArray()[0];
 		try {
-			ev3.createRegulatedMotor("C", typeC);
+			RMIRegulatedMotor motor = ev3.createRegulatedMotor("C", typeC);
+			motor.setAcceleration(360);
 		} catch(DeviceException e) {
 			logger.info("Motor C: "+e.getMessage());
 		}

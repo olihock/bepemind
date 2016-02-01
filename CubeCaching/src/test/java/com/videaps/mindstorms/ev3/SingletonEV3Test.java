@@ -30,11 +30,12 @@ import lejos.hardware.sensor.EV3IRSensor;
 import lejos.remote.ev3.RMIRegulatedMotor;
 import lejos.remote.ev3.RMISampleProvider;
 import lejos.remote.ev3.RemoteEV3;
+import lejos.utility.Delay;
 
 
 public class SingletonEV3Test {
 
-	private final String host = "192.168.173.211";
+	private final String host = "192.168.173.201";
 	
 	@Test
 	public void test() throws NotBoundException, RemoteException, MalformedURLException {
@@ -76,7 +77,7 @@ public class SingletonEV3Test {
 		SingletonEV3 ev3 = SingletonEV3.intitialise(host);
 		RMISampleProvider sampleProvider = ev3.createSampleProvider("S1", "lejos.hardware.sensor.EV3IRSensor", "Distance");
 		
-		for(int i = 0; i < 50; i++) {
+		for(int i = 0; i < 25; i++) {
 			float[] samples = sampleProvider.fetchSample();
 			for(float sample : samples) {
 				System.out.println(sample);
@@ -112,7 +113,16 @@ public class SingletonEV3Test {
 	
 	
 	@Test
-	public void testRange() {
+	public void testMediumMotor() throws RemoteException, MalformedURLException, NotBoundException {
+		SingletonEV3 ev3 = SingletonEV3.intitialise(host);
+		RMIRegulatedMotor motor = ev3.createRegulatedMotor("A", 'M');
+
+		int angle = 360;
+		System.out.println("angle="+angle);
+		motor.rotate(angle);
+		Delay.msDelay(5000);
+		motor.rotate(-angle);
 		
+		motor.close();
 	}
 }

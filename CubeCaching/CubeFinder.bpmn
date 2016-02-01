@@ -51,7 +51,7 @@
     </serviceTask>
     <sequenceFlow id="flow8" sourceRef="leftMotor" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow9" sourceRef="startMotorC" targetRef="parallelgateway2"></sequenceFlow>
-    <sequenceFlow id="flow10" sourceRef="parallelgateway4" targetRef="cleanUpCubeFinder"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="parallelgateway4" targetRef="grabCube"></sequenceFlow>
     <sequenceFlow id="flow11" sourceRef="initialiseCubeFinder" targetRef="parallelgateway1"></sequenceFlow>
     <serviceTask id="descryCube" name="Descry Cube" activiti:class="com.videaps.mindstorms.ev3.SensorDelegate">
       <extensionElements>
@@ -90,9 +90,11 @@
     <sequenceFlow id="flow17" sourceRef="stopMotorC" targetRef="parallelgateway4"></sequenceFlow>
     <dataObject id="host" name="host" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>192.168.173.211</activiti:value>
+        <activiti:value>192.168.173.201</activiti:value>
       </extensionElements>
     </dataObject>
+    <serviceTask id="grabCube" name="Grab Cube"></serviceTask>
+    <sequenceFlow id="flow18" sourceRef="grabCube" targetRef="cleanUpCubeFinder"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_cubeFinder">
     <bpmndi:BPMNPlane bpmnElement="cubeFinder" id="BPMNPlane_cubeFinder">
@@ -103,7 +105,7 @@
         <omgdc:Bounds height="55.0" width="105.0" x="230.0" y="70.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
-        <omgdc:Bounds height="35.0" width="35.0" x="880.0" y="139.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="1080.0" y="63.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
         <omgdc:Bounds height="40.0" width="40.0" x="180.0" y="124.0"></omgdc:Bounds>
@@ -115,7 +117,7 @@
         <omgdc:Bounds height="55.0" width="105.0" x="230.0" y="167.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="cleanUpCubeFinder" id="BPMNShape_cleanUpCubeFinder">
-        <omgdc:Bounds height="55.0" width="105.0" x="800.0" y="40.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="895.0" y="42.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="initialiseCubeFinder" id="BPMNShape_initialiseCubeFinder">
         <omgdc:Bounds height="55.0" width="105.0" x="48.0" y="221.0"></omgdc:Bounds>
@@ -135,9 +137,12 @@
       <bpmndi:BPMNShape bpmnElement="parallelgateway4" id="BPMNShape_parallelgateway4">
         <omgdc:Bounds height="40.0" width="40.0" x="730.0" y="214.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="grabCube" id="BPMNShape_grabCube">
+        <omgdc:Bounds height="55.0" width="105.0" x="850.0" y="270.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="852.0" y="95.0"></omgdi:waypoint>
-        <omgdi:waypoint x="897.0" y="139.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1000.0" y="69.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1080.0" y="80.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
         <omgdi:waypoint x="200.0" y="164.0"></omgdi:waypoint>
@@ -164,8 +169,8 @@
         <omgdi:waypoint x="360.0" y="164.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
-        <omgdi:waypoint x="750.0" y="214.0"></omgdi:waypoint>
-        <omgdi:waypoint x="852.0" y="95.0"></omgdi:waypoint>
+        <omgdi:waypoint x="750.0" y="254.0"></omgdi:waypoint>
+        <omgdi:waypoint x="902.0" y="270.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
         <omgdi:waypoint x="100.0" y="221.0"></omgdi:waypoint>
@@ -199,6 +204,10 @@
         <omgdi:waypoint x="715.0" y="277.0"></omgdi:waypoint>
         <omgdi:waypoint x="750.0" y="277.0"></omgdi:waypoint>
         <omgdi:waypoint x="750.0" y="254.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
+        <omgdi:waypoint x="902.0" y="270.0"></omgdi:waypoint>
+        <omgdi:waypoint x="947.0" y="97.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
