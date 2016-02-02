@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeScanner">
+  <process id="cubeScanner" name="Cube Scanner" isExecutable="true">
+    <startEvent id="start" name="Start"></startEvent>
+    <endEvent id="end" name="End"></endEvent>
+    <serviceTask id="turnLeft" name="Turn Left" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[rotate]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationCount">
+          <activiti:string><![CDATA[45]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="scanLeftSide" name="Scan Left Side" activiti:class="com.videaps.mindstorms.ev3.DistanceDelegate">
+      <extensionElements>
+        <activiti:field name="sensorPort">
+          <activiti:string><![CDATA[S1]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="turnBackFromLeft" name="Turn Back From Left" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[rotate]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationCount">
+          <activiti:string><![CDATA[-45]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="turnRight" name="Turn Right" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[rotate]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationCount">
+          <activiti:string><![CDATA[45]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow2" sourceRef="turnLeft" targetRef="waitForLeftBack"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="scanLeftSide" targetRef="turnBackFromLeft"></sequenceFlow>
+    <serviceTask id="scanRightSide" name="Scan Right Side" activiti:class="com.videaps.mindstorms.ev3.DistanceDelegate">
+      <extensionElements>
+        <activiti:field name="sensorPort">
+          <activiti:string><![CDATA[S1]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="turnBackFromRight" name="Turn Back From Right" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[rotate]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationCount">
+          <activiti:string><![CDATA[-45]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow8" sourceRef="turnRight" targetRef="waitForRightTurn"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="scanRightSide" targetRef="turnBackFromRight"></sequenceFlow>
+    <sequenceFlow id="flow10" sourceRef="turnBackFromRight" targetRef="waitForRightBack"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="turnBackFromLeft" targetRef="waitForLeftBack"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="start" targetRef="turnLeft"></sequenceFlow>
+    <serviceTask id="waitForLeftTurn" name="Wait For Left Turn" activiti:class="com.videaps.mindstorms.ev3.WaitDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow13" sourceRef="waitForLeftBack" targetRef="scanLeftSide"></sequenceFlow>
+    <serviceTask id="waitForLeftBack" name="Wait For Left Back" activiti:class="com.videaps.mindstorms.ev3.WaitDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow14" sourceRef="waitForLeftBack" targetRef="turnRight"></sequenceFlow>
+    <serviceTask id="waitForRightTurn" name="Wait For Right Turn" activiti:class="com.videaps.mindstorms.ev3.WaitDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow15" sourceRef="waitForRightTurn" targetRef="scanRightSide"></sequenceFlow>
+    <serviceTask id="waitForRightBack" name="Wait For Right Back" activiti:class="com.videaps.mindstorms.ev3.WaitDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow16" sourceRef="waitForRightBack" targetRef="end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_cubeScanner">
+    <bpmndi:BPMNPlane bpmnElement="cubeScanner" id="BPMNPlane_cubeScanner">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="136.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="890.0" y="430.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnLeft" id="BPMNShape_turnLeft">
+        <omgdc:Bounds height="55.0" width="105.0" x="256.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scanLeftSide" id="BPMNShape_scanLeftSide">
+        <omgdc:Bounds height="55.0" width="105.0" x="540.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnBackFromLeft" id="BPMNShape_turnBackFromLeft">
+        <omgdc:Bounds height="55.0" width="105.0" x="690.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnRight" id="BPMNShape_turnRight">
+        <omgdc:Bounds height="55.0" width="105.0" x="256.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scanRightSide" id="BPMNShape_scanRightSide">
+        <omgdc:Bounds height="55.0" width="105.0" x="540.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnBackFromRight" id="BPMNShape_turnBackFromRight">
+        <omgdc:Bounds height="55.0" width="105.0" x="690.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="waitForLeftTurn" id="BPMNShape_waitForLeftTurn">
+        <omgdc:Bounds height="55.0" width="105.0" x="400.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="waitForLeftBack" id="BPMNShape_waitForLeftBack">
+        <omgdc:Bounds height="55.0" width="105.0" x="256.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="waitForRightTurn" id="BPMNShape_waitForRightTurn">
+        <omgdc:Bounds height="55.0" width="105.0" x="400.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="waitForRightBack" id="BPMNShape_waitForRightBack">
+        <omgdc:Bounds height="55.0" width="105.0" x="690.0" y="420.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="308.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="308.0" y="220.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="645.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="690.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="361.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="400.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="645.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="690.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="742.0" y="375.0"></omgdi:waypoint>
+        <omgdi:waypoint x="742.0" y="420.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="742.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="742.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="361.0" y="247.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="171.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="256.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="308.0" y="220.0"></omgdi:waypoint>
+        <omgdi:waypoint x="592.0" y="185.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="308.0" y="275.0"></omgdi:waypoint>
+        <omgdi:waypoint x="308.0" y="320.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="505.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="795.0" y="447.0"></omgdi:waypoint>
+        <omgdi:waypoint x="890.0" y="447.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -38,10 +38,12 @@ public class MotorDelegate implements JavaDelegate {
 	public static final String FUNCTION_ROTATE = "rotate";
 	public static final String FUNCTION_START = "start";
 	public static final String FUNCTION_STOP = "stop";
+	public static final String FUNCTION_ROTATE_TO = "rotateTo";
 	
 	private FixedValue motorPort;
 	private FixedValue motorFunction;
 	private FixedValue rotationCount;
+	private FixedValue tachoCount;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -52,11 +54,14 @@ public class MotorDelegate implements JavaDelegate {
 
 		if(FUNCTION_ROTATE.equals(motorFunctionValue)) {
 			int rotationCountValue = Integer.valueOf(""+rotationCount.getValue(execution));
-			SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue*360, true);
+			Brick.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue, true);
 		} else if(FUNCTION_START.equals(motorFunctionValue)) {
-			SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).forward();
+			Brick.getInstance().getRegulatedMotor(motorPortValue).forward();
 		} else if(FUNCTION_STOP.equals(motorFunctionValue)) {
-			SingletonEV3.getInstance().getRegulatedMotor(motorPortValue).stop(true);
+			Brick.getInstance().getRegulatedMotor(motorPortValue).stop(true);
+		} else if(FUNCTION_ROTATE_TO.equals(motorFunctionValue)) {
+			int tachoCountValue = Integer.valueOf(""+tachoCount.getValue(execution));
+			Brick.getInstance().getRegulatedMotor(motorPortValue).rotateTo(tachoCountValue, true);
 		}
 		
 		logger.finest("exiting");

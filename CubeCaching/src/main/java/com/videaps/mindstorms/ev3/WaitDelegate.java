@@ -16,35 +16,25 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder;
+package com.videaps.mindstorms.ev3;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
-
-import com.videaps.mindstorms.ev3.Brick;
+import org.activiti.engine.impl.el.FixedValue;
 
 
 /**
- *
+ * A kind of dummy class to just wait for all motors to complete their movements,
+ * including a stalled motor situation.
  */
-public class Cleaner implements JavaDelegate {
+public class WaitDelegate implements JavaDelegate {
+
+	private FixedValue motorPort;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		
-		Brick.getInstance().getSampleProvider("S1").close();
-		
-		while(Brick.getInstance().getRegulatedMotor("A").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("A").close();
-		
-		while(Brick.getInstance().getRegulatedMotor("B").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("B").close();
-
-		while(Brick.getInstance().getRegulatedMotor("C").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("C").close();
+		String motorPortValue = ""+motorPort.getValue(execution);
+		Brick.getInstance().getRegulatedMotor(motorPortValue).waitComplete();
 	}
 
 }

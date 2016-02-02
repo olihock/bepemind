@@ -33,25 +33,25 @@ import lejos.remote.ev3.RemoteEV3;
  * This singleton class reflects the EV3 brick which needs to statically instantiated.
  * Motor and sensor ports can be created by it.
  */
-public class SingletonEV3 extends RemoteEV3 {
-	private static SingletonEV3 instance = null;
+public class Brick extends RemoteEV3 {
+	private static Brick instance = null;
 	
 	private Map<String, RMIRegulatedMotor> motorMap = new HashMap<String, RMIRegulatedMotor>();
 	private Map<String, RMISampleProvider> sensorMap = new HashMap<String, RMISampleProvider>();
 	
 	
-	private SingletonEV3(String host) throws RemoteException, MalformedURLException, NotBoundException {
+	private Brick(String host) throws RemoteException, MalformedURLException, NotBoundException {
 		super(host);
 	}
 	
-	public static SingletonEV3 intitialise(String host) throws RemoteException, MalformedURLException, NotBoundException {
+	public static Brick intitialise(String host) throws RemoteException, MalformedURLException, NotBoundException {
 		if(instance == null) {
-			instance = new SingletonEV3(host);
+			instance = new Brick(host);
 		}
 		return instance;
 	}
 	
-	public static SingletonEV3 getInstance() {
+	public static Brick getInstance() {
 		if(instance == null) {
 			throw new IllegalArgumentException("This Singleton needs to be initialised. Call getInstance(host) first.");
 		}

@@ -13,9 +13,9 @@ import org.activiti.engine.test.ActivitiRule;
 import org.junit.Rule;
 import org.junit.Test;
 
-public class ProcessTestCubeFinder {
+public class ProcessTestWigglyLiner {
 
-	private String filename = ProcessTestConfig.BPMN_CUBE_FINDER;
+	private String filename = ProcessTestConfig.BPMN_WIGGLY_LINER;
 
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule();
@@ -23,12 +23,16 @@ public class ProcessTestCubeFinder {
 	@Test
 	public void startProcess() throws Exception {
 		RepositoryService repositoryService = activitiRule.getRepositoryService();
-		repositoryService.createDeployment().addInputStream("cubeFinder.bpmn20.xml",
-				new FileInputStream(filename)).deploy();
+		
+		repositoryService.createDeployment()
+			.addInputStream("wigglyLiner.bpmn20.xml", new FileInputStream(filename))
+			.addInputStream("cubeScanner.bpmn20.xml", new FileInputStream(ProcessTestConfig.BPMN_CUBE_SCANNER) )
+		.deploy();
+		
 		RuntimeService runtimeService = activitiRule.getRuntimeService();
 		Map<String, Object> variableMap = new HashMap<String, Object>();
 		variableMap.put("name", "Activiti");
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("cubeFinder", variableMap);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("wigglyLiner", variableMap);
 		assertNotNull(processInstance.getId());
 		System.out.println("id " + processInstance.getId() + " "
 				+ processInstance.getProcessDefinitionId());

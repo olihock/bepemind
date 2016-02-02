@@ -16,35 +16,36 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder;
+package com.videaps.mindstorms.ev3;
+
+import java.util.logging.Logger;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
-
-import com.videaps.mindstorms.ev3.Brick;
+import org.activiti.engine.impl.el.FixedValue;
 
 
 /**
- *
+ * This class causes the configured distance sensor to scan the environment in front of the sensor.
+ * It stores the result, re. the distance, if any, in the process parameter for later use.
  */
-public class Cleaner implements JavaDelegate {
+public class DistanceDelegate implements JavaDelegate {
+	private static final Logger logger = Logger.getLogger(DistanceDelegate.class.getName());
+
+	public static final String VAR_NAME_DISTANCE = "distance";
+	
+	private FixedValue sensorPort;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		
-		Brick.getInstance().getSampleProvider("S1").close();
-		
-		while(Brick.getInstance().getRegulatedMotor("A").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("A").close();
-		
-		while(Brick.getInstance().getRegulatedMotor("B").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("B").close();
+		logger.finest("entering");
 
-		while(Brick.getInstance().getRegulatedMotor("C").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("C").close();
+		String sensorPortValue = ""+sensorPort.getValue(execution);
+		
+		float[] samples = Brick.getInstance().getSampleProvider(sensorPortValue).fetchSample();
+		execution.setVariable(VAR_NAME_DISTANCE, samples[0]);
+		
+		logger.finest("exiting");
 	}
 
 }

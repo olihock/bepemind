@@ -34,13 +34,10 @@ public class WigglyLineTest {
 
 	@Test
 	public void testGoStraight() throws RemoteException, MalformedURLException, NotBoundException {
-		SingletonEV3 ev3 = SingletonEV3.intitialise(host);
+		Brick ev3 = Brick.intitialise(host);
 		RMIRegulatedMotor motorB = ev3.createRegulatedMotor("B", 'L');
 		RMIRegulatedMotor motorC = ev3.createRegulatedMotor("C", 'L');
 
-		int speedB = motorB.getSpeed();
-		int speedC = motorC .getSpeed();
-		
 		int tachoCountB = motorB.getTachoCount();
 		int tachoCountC = motorC.getTachoCount();
 		

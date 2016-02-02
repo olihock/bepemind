@@ -24,7 +24,7 @@ import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.impl.el.FixedValue;
 
-import com.videaps.mindstorms.ev3.SingletonEV3;
+import com.videaps.mindstorms.ev3.Brick;
 
 import lejos.hardware.DeviceException;
 import lejos.remote.ev3.RMIRegulatedMotor;
@@ -51,7 +51,7 @@ public class Initialiser implements JavaDelegate {
 		String hostVar = ""+execution.getVariable("host");
 		logger.finer("hostVar="+hostVar);
 		
-		SingletonEV3 ev3 = SingletonEV3.intitialise(hostVar);
+		Brick ev3 = Brick.intitialise(hostVar);
 
 		char typeA = (""+motorA.getValue(execution)).toCharArray()[0];
 		try {
