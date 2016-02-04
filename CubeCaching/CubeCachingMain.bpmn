@@ -20,11 +20,25 @@
     <serviceTask id="cleanUpCubeFinder" name="Clean Up Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
     <sequenceFlow id="flow2" sourceRef="cleanUpCubeFinder" targetRef="endevent1"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="callWheeler"></sequenceFlow>
-    <callActivity id="callWheeler" name="Call Wheeler" calledElement="wheeler"></callActivity>
+    <callActivity id="callWheeler" name="Call Wheeler" calledElement="wheeler">
+      <extensionElements>
+        <activiti:in source="xLength" target="distance"></activiti:in>
+      </extensionElements>
+    </callActivity>
     <sequenceFlow id="flow4" sourceRef="callWheeler" targetRef="cleanUpCubeFinder"></sequenceFlow>
     <dataObject id="host" name="host" itemSubjectRef="xsd:string">
       <extensionElements>
         <activiti:value>192.168.173.33</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:int">
+      <extensionElements>
+        <activiti:value>100</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:int">
+      <extensionElements>
+        <activiti:value>60</activiti:value>
       </extensionElements>
     </dataObject>
   </process>

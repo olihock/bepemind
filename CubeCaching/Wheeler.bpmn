@@ -11,9 +11,6 @@
         <activiti:field name="motorFunction">
           <activiti:string><![CDATA[rotate]]></activiti:string>
         </activiti:field>
-        <activiti:field name="rotationDegrees">
-          <activiti:string><![CDATA[720]]></activiti:string>
-        </activiti:field>
         <activiti:field name="immediateReturn">
           <activiti:string><![CDATA[true]]></activiti:string>
         </activiti:field>
@@ -27,9 +24,6 @@
         <activiti:field name="motorFunction">
           <activiti:string><![CDATA[rotate]]></activiti:string>
         </activiti:field>
-        <activiti:field name="rotationDegrees">
-          <activiti:string><![CDATA[720]]></activiti:string>
-        </activiti:field>
         <activiti:field name="immediateReturn">
           <activiti:string><![CDATA[false]]></activiti:string>
         </activiti:field>
@@ -38,6 +32,11 @@
     <sequenceFlow id="flow1" sourceRef="start" targetRef="rotateLeftMotor"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="rotateLeftMotor" targetRef="rotateRightMotor"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="rotateRightMotor" targetRef="end"></sequenceFlow>
+    <dataObject id="circumference" name="circumference" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <activiti:value>10</activiti:value>
+      </extensionElements>
+    </dataObject>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_wheeler">
     <bpmndi:BPMNPlane bpmnElement="wheeler" id="BPMNPlane_wheeler">
