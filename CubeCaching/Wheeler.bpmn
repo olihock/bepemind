@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/Wheeler">
+  <process id="wheeler" name="Wheeler" isExecutable="true">
+    <startEvent id="start" name="Start"></startEvent>
+    <endEvent id="end" name="End"></endEvent>
+    <serviceTask id="rotateLeftMotor" name="Rotate Left Motor" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[rotate]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationDegrees">
+          <activiti:string><![CDATA[720]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="immediateReturn">
+          <activiti:string><![CDATA[true]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="rotateRightMotor" name="Rotate Right Motor" activiti:class="com.videaps.mindstorms.ev3.MotorDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorFunction">
+          <activiti:string><![CDATA[rotate]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="rotationDegrees">
+          <activiti:string><![CDATA[720]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="immediateReturn">
+          <activiti:string><![CDATA[false]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="rotateLeftMotor"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="rotateLeftMotor" targetRef="rotateRightMotor"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="rotateRightMotor" targetRef="end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_wheeler">
+    <bpmndi:BPMNPlane bpmnElement="wheeler" id="BPMNPlane_wheeler">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="300.0" y="190.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="rotateLeftMotor" id="BPMNShape_rotateLeftMotor">
+        <omgdc:Bounds height="55.0" width="105.0" x="140.0" y="120.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="rotateRightMotor" id="BPMNShape_rotateRightMotor">
+        <omgdc:Bounds height="55.0" width="105.0" x="140.0" y="244.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="67.0" y="190.0"></omgdi:waypoint>
+        <omgdi:waypoint x="67.0" y="147.0"></omgdi:waypoint>
+        <omgdi:waypoint x="140.0" y="147.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="192.0" y="175.0"></omgdi:waypoint>
+        <omgdi:waypoint x="192.0" y="244.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="245.0" y="271.0"></omgdi:waypoint>
+        <omgdi:waypoint x="317.0" y="271.0"></omgdi:waypoint>
+        <omgdi:waypoint x="317.0" y="225.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

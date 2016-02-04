@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeCachingMain">
+  <process id="cubeCachingMain" name="Cube Caching Main" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <serviceTask id="initialiseCubeFinder" name="Initialise Cube Finder" activiti:class="com.videaps.cubefinder.Initialiser">
+      <extensionElements>
+        <activiti:field name="motorA">
+          <activiti:string><![CDATA[M]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorB">
+          <activiti:string><![CDATA[L]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="motorC">
+          <activiti:string><![CDATA[L]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="initialiseCubeFinder"></sequenceFlow>
+    <serviceTask id="cleanUpCubeFinder" name="Clean Up Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
+    <sequenceFlow id="flow2" sourceRef="cleanUpCubeFinder" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="callWheeler"></sequenceFlow>
+    <callActivity id="callWheeler" name="Call Wheeler" calledElement="wheeler"></callActivity>
+    <sequenceFlow id="flow4" sourceRef="callWheeler" targetRef="cleanUpCubeFinder"></sequenceFlow>
+    <dataObject id="host" name="host" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <activiti:value>192.168.173.33</activiti:value>
+      </extensionElements>
+    </dataObject>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_cubeCachingMain">
+    <bpmndi:BPMNPlane bpmnElement="cubeCachingMain" id="BPMNPlane_cubeCachingMain">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="65.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="575.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="initialiseCubeFinder" id="BPMNShape_initialiseCubeFinder">
+        <omgdc:Bounds height="55.0" width="105.0" x="30.0" y="265.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="cleanUpCubeFinder" id="BPMNShape_cleanUpCubeFinder">
+        <omgdc:Bounds height="55.0" width="105.0" x="540.0" y="265.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="callWheeler" id="BPMNShape_callWheeler">
+        <omgdc:Bounds height="55.0" width="105.0" x="290.0" y="265.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="82.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="82.0" y="265.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="592.0" y="265.0"></omgdi:waypoint>
+        <omgdi:waypoint x="592.0" y="115.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="135.0" y="292.0"></omgdi:waypoint>
+        <omgdi:waypoint x="290.0" y="292.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="395.0" y="292.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="292.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -42,8 +42,9 @@ public class MotorDelegate implements JavaDelegate {
 	
 	private FixedValue motorPort;
 	private FixedValue motorFunction;
-	private FixedValue rotationCount;
+	private FixedValue rotationDegrees;
 	private FixedValue tachoCount;
+	private FixedValue immediateReturn;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -51,17 +52,18 @@ public class MotorDelegate implements JavaDelegate {
 		
 		String motorPortValue = ""+motorPort.getValue(execution);
 		String motorFunctionValue = ""+motorFunction.getValue(execution);
+		boolean immediateReturnValue = Boolean.valueOf(""+immediateReturn.getValue(execution));
 
 		if(FUNCTION_ROTATE.equals(motorFunctionValue)) {
-			int rotationCountValue = Integer.valueOf(""+rotationCount.getValue(execution));
-			Brick.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue, true);
+			int rotationCountValue = Integer.valueOf(""+rotationDegrees.getValue(execution));
+			Brick.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationCountValue, immediateReturnValue);
 		} else if(FUNCTION_START.equals(motorFunctionValue)) {
 			Brick.getInstance().getRegulatedMotor(motorPortValue).forward();
 		} else if(FUNCTION_STOP.equals(motorFunctionValue)) {
-			Brick.getInstance().getRegulatedMotor(motorPortValue).stop(true);
+			Brick.getInstance().getRegulatedMotor(motorPortValue).stop(immediateReturnValue);
 		} else if(FUNCTION_ROTATE_TO.equals(motorFunctionValue)) {
 			int tachoCountValue = Integer.valueOf(""+tachoCount.getValue(execution));
-			Brick.getInstance().getRegulatedMotor(motorPortValue).rotateTo(tachoCountValue, true);
+			Brick.getInstance().getRegulatedMotor(motorPortValue).rotateTo(tachoCountValue, immediateReturnValue);
 		}
 		
 		logger.finest("exiting");
