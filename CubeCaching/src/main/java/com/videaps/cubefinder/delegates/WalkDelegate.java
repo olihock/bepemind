@@ -16,22 +16,34 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.mindstorms.ev3;
+package com.videaps.cubefinder.delegates;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
+import org.activiti.engine.impl.el.FixedValue;
+import org.activiti.engine.impl.el.JuelExpression;
 
+import com.videaps.mindstorms.ev3.Brick;
 
-/**
- * A kind of dummy class to just wait for all motors to complete their movements,
- * including a stalled motor situation.
- */
-public class WaitDelegate implements JavaDelegate {
+public class WalkDelegate implements JavaDelegate {
 
+	/** Wheel circumference which is used to calculate the distance a wheel walks for one turn. */
+	public static final int circumference = 10;
+	
+	private FixedValue motorPort;
+	private JuelExpression immediateReturn;
+
+	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		Brick.getInstance().getRegulatedMotor("B").waitComplete();
-		Brick.getInstance().getRegulatedMotor("C").waitComplete();
+		String motorPortValue = (String) motorPort.getValue(execution);
+		Boolean immediateReturnValue = (Boolean) immediateReturn.getValue(execution);
+		
+		Integer distanceValue = execution.getVariable("distance", Integer.class);
+		Integer rotationDegrees = ( distanceValue / circumference ) * 360;
+		
+		Brick.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationDegrees, immediateReturnValue);
+
 	}
 
 }

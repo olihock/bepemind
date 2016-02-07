@@ -20,18 +20,40 @@ package com.videaps.mindstorms.ev3;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
+import org.activiti.engine.impl.el.FixedValue;
+import org.activiti.engine.impl.el.JuelExpression;
+
+import com.videaps.cubefinder.Cleaner;
+
+import lejos.remote.ev3.RMIRegulatedMotor;
 
 
-/**
- * A kind of dummy class to just wait for all motors to complete their movements,
- * including a stalled motor situation.
- */
-public class WaitDelegate implements JavaDelegate {
+public class TurnDelegate implements JavaDelegate {
+
+	private FixedValue motorPort;
+	private JuelExpression turnDirection;
+	private JuelExpression rotationDegrees;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		Brick.getInstance().getRegulatedMotor("B").waitComplete();
-		Brick.getInstance().getRegulatedMotor("C").waitComplete();
+		try {
+			String motorPortValue = ""+motorPort.getValue(execution);
+			RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(motorPortValue);
+			
+			Long rotationDegreesValue = (Long) rotationDegrees.getValue(execution);
+			
+			Boolean turnDirectionValue = (Boolean) turnDirection.getValue(execution);
+			if(!turnDirectionValue) {
+				rotationDegreesValue = -rotationDegreesValue;
+			}
+			
+			motor.rotate(rotationDegreesValue.intValue(), true);
+			
+		} catch(Exception e) {
+			// The cleaner can be call here with parameter null, as all ports are static.
+			new Cleaner().execute(null);
+			throw e;
+		}
 	}
 
 }

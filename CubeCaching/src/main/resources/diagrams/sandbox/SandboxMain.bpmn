@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/SandboxMain">
+  <process id="sandboxMain" name="Sandbox Main" isExecutable="true">
+    <startEvent id="startevent1" name="Start"></startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <callActivity id="walkUp" name="Walk Up" calledElement="walking">
+      <extensionElements>
+        <activiti:in sourceExpression="${yLength}" target="distance"></activiti:in>
+        <activiti:in sourceExpression="up" target="direction"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="walkUp"></sequenceFlow>
+    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:int">
+      <extensionElements>
+        <activiti:value>60</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:int">
+      <extensionElements>
+        <activiti:value>100</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="xFraction" name="xFraction" itemSubjectRef="xsd:int">
+      <extensionElements>
+        <activiti:value>20</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="wheelCircumference" name="wheelCircumference" itemSubjectRef="xsd:int">
+      <extensionElements>
+        <activiti:value>10</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <sequenceFlow id="flow2" sourceRef="walkUp" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sandboxMain">
+    <bpmndi:BPMNPlane bpmnElement="sandboxMain" id="BPMNPlane_sandboxMain">
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="40.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="970.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="walkUp" id="BPMNShape_walkUp">
+        <omgdc:Bounds height="55.0" width="105.0" x="170.0" y="170.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="75.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="170.0" y="197.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="275.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="970.0" y="217.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
