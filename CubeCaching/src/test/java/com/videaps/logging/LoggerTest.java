@@ -1,4 +1,4 @@
-package com.videaps.cube;
+package com.videaps.logging;
 
 import java.util.logging.Logger;
 

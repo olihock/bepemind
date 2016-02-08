@@ -8,11 +8,15 @@
         <activiti:in sourceExpression="${yLength}" target="distance"></activiti:in>
         <activiti:in sourceExpression="up" target="direction"></activiti:in>
       </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="true">
+        <loopCardinality>${ ( xLength / xFraction ) }</loopCardinality>
+      </multiInstanceLoopCharacteristics>
     </callActivity>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="walkUp"></sequenceFlow>
-    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:int">
+    <sequenceFlow id="flow2" sourceRef="walkUp" targetRef="endevent1"></sequenceFlow>
+    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>60</activiti:value>
+        <activiti:value>80</activiti:value>
       </extensionElements>
     </dataObject>
     <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:int">
@@ -30,7 +34,6 @@
         <activiti:value>10</activiti:value>
       </extensionElements>
     </dataObject>
-    <sequenceFlow id="flow2" sourceRef="walkUp" targetRef="endevent1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_sandboxMain">
     <bpmndi:BPMNPlane bpmnElement="sandboxMain" id="BPMNPlane_sandboxMain">
@@ -41,15 +44,15 @@
         <omgdc:Bounds height="35.0" width="35.0" x="970.0" y="200.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkUp" id="BPMNShape_walkUp">
-        <omgdc:Bounds height="55.0" width="105.0" x="170.0" y="170.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="320.0" y="161.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="75.0" y="187.0"></omgdi:waypoint>
-        <omgdi:waypoint x="170.0" y="197.0"></omgdi:waypoint>
+        <omgdi:waypoint x="320.0" y="188.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="275.0" y="197.0"></omgdi:waypoint>
-        <omgdi:waypoint x="970.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="425.0" y="188.0"></omgdi:waypoint>
+        <omgdi:waypoint x="987.0" y="200.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

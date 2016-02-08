@@ -37,7 +37,6 @@ public class WalkingService implements JavaDelegate {
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-//		System.out.println(formatter.format(new Date())+" entering: "+new Exception().getStackTrace()[0].getMethodName());
 		
 		Boolean walkUpValue = (Boolean) direction.getValue(execution);
 		System.out.println("walkUp="+walkUpValue);
@@ -48,7 +47,6 @@ public class WalkingService implements JavaDelegate {
 		Boolean immediateReturnValue = (Boolean) immediateReturn.getValue(execution);
 		System.out.println("immediateReturn="+immediateReturnValue);
 		if(!immediateReturnValue) {
-//			String direction = execution.getVariable("direction", String.class);
 			Integer distance = execution.getVariable("distance", Integer.class);
 
 			System.out.println("Walking for "+distance+" cm.");
@@ -56,7 +54,6 @@ public class WalkingService implements JavaDelegate {
 			Thread.sleep(Math.max(distance*10, 5));
 		}
 		
-//		System.out.println(formatter.format(new Date())+" exiting: "+new Exception().getStackTrace()[0].getMethodName());
 	}
 
 }

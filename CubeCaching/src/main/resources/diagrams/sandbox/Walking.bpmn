@@ -17,15 +17,7 @@
       </extensionElements>
     </serviceTask>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="leftWheel"></sequenceFlow>
-    <sequenceFlow id="flow2" sourceRef="leftWheel" targetRef="rightWheel"></sequenceFlow>
-    <serviceTask id="rightWheel" name="Right Wheel" activiti:class="com.videaps.sandbox.WalkingService">
-      <extensionElements>
-        <activiti:field name="immediateReturn">
-          <activiti:string><![CDATA[false]]></activiti:string>
-        </activiti:field>
-      </extensionElements>
-    </serviceTask>
-    <sequenceFlow id="flow3" sourceRef="rightWheel" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="leftWheel" targetRef="endevent1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walking">
     <bpmndi:BPMNPlane bpmnElement="walking" id="BPMNPlane_walking">
@@ -38,20 +30,13 @@
       <bpmndi:BPMNShape bpmnElement="leftWheel" id="BPMNShape_leftWheel">
         <omgdc:Bounds height="55.0" width="105.0" x="270.0" y="100.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="rightWheel" id="BPMNShape_rightWheel">
-        <omgdc:Bounds height="55.0" width="105.0" x="270.0" y="220.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="155.0" y="127.0"></omgdi:waypoint>
         <omgdi:waypoint x="270.0" y="127.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
         <omgdi:waypoint x="322.0" y="155.0"></omgdi:waypoint>
-        <omgdi:waypoint x="322.0" y="220.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="375.0" y="247.0"></omgdi:waypoint>
-        <omgdi:waypoint x="500.0" y="247.0"></omgdi:waypoint>
+        <omgdi:waypoint x="517.0" y="230.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
