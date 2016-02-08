@@ -25,6 +25,8 @@ import org.activiti.engine.impl.el.JuelExpression;
 
 import com.videaps.mindstorms.ev3.Brick;
 
+import lejos.remote.ev3.RMIRegulatedMotor;
+
 public class WalkDelegate implements JavaDelegate {
 
 	/** Wheel circumference which is used to calculate the distance a wheel walks for one turn. */
@@ -38,11 +40,19 @@ public class WalkDelegate implements JavaDelegate {
 	public void execute(DelegateExecution execution) throws Exception {
 		String motorPortValue = (String) motorPort.getValue(execution);
 		Boolean immediateReturnValue = (Boolean) immediateReturn.getValue(execution);
-		
-		Integer distanceValue = execution.getVariable("distance", Integer.class);
-		Integer rotationDegrees = ( distanceValue / circumference ) * 360;
-		
-		Brick.getInstance().getRegulatedMotor(motorPortValue).rotate(rotationDegrees, immediateReturnValue);
+
+		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(motorPortValue);
+
+		try {
+			Integer distanceValue = execution.getVariable("distance", Integer.class);
+			Integer rotationDegrees = ( distanceValue / circumference ) * 360;
+			
+			motor.rotate(rotationDegrees, immediateReturnValue);
+		} catch(Exception e) {
+			Brick.getInstance().closeMotors();
+			Brick.getInstance().closeSensors();
+			throw e;
+		}
 
 	}
 

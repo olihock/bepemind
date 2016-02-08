@@ -23,8 +23,6 @@ import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.impl.el.FixedValue;
 import org.activiti.engine.impl.el.JuelExpression;
 
-import com.videaps.cubefinder.Cleaner;
-
 import lejos.remote.ev3.RMIRegulatedMotor;
 
 
@@ -50,8 +48,8 @@ public class TurnDelegate implements JavaDelegate {
 			motor.rotate(rotationDegreesValue.intValue(), true);
 			
 		} catch(Exception e) {
-			// The cleaner can be call here with parameter null, as all ports are static.
-			new Cleaner().execute(null);
+			Brick.getInstance().closeMotors();
+			Brick.getInstance().closeSensors();
 			throw e;
 		}
 	}

@@ -58,6 +58,17 @@ public class Brick extends RemoteEV3 {
 		return instance; 
 	}
 	
+	public void closeMotors() throws RemoteException {
+		for(RMIRegulatedMotor motor : motorMap.values()) {
+			motor.close();
+		}
+	}
+	
+	public void closeSensors() throws RemoteException {
+		for(RMISampleProvider sensor : sensorMap.values()) {
+			sensor.close();
+		}
+	}
 	
 	@Override
 	public RMIRegulatedMotor createRegulatedMotor(String portName, char motorType) {

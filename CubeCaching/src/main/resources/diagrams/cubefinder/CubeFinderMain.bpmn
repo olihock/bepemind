@@ -19,14 +19,26 @@
     <endEvent id="end" name="End"></endEvent>
     <sequenceFlow id="flow1" sourceRef="start" targetRef="initialiseCubeFinder"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="cleanUpCubeFinder" targetRef="end"></sequenceFlow>
+    <callActivity id="searchForCube" name="Search For Cube" calledElement="search">
+      <extensionElements>
+        <activiti:in source="xLength" target="xLength"></activiti:in>
+        <activiti:in source="yLength" target="yLength"></activiti:in>
+        <activiti:in source="xFraction" target="xFraction"></activiti:in>
+      </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="true">
+        <loopCardinality>${ ( xLength / xFraction ) }</loopCardinality>
+      </multiInstanceLoopCharacteristics>
+    </callActivity>
+    <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="searchForCube"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="cleanUpCubeFinder"></sequenceFlow>
     <dataObject id="host" name="host" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>192.168.173.46</activiti:value>
+        <activiti:value>192.168.173.142</activiti:value>
       </extensionElements>
     </dataObject>
     <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:int">
       <extensionElements>
-        <activiti:value>60</activiti:value>
+        <activiti:value>20</activiti:value>
       </extensionElements>
     </dataObject>
     <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:int">
@@ -39,16 +51,6 @@
         <activiti:value>20</activiti:value>
       </extensionElements>
     </dataObject>
-    <callActivity id="searchForCube" name="Search For Cube" calledElement="search">
-      <extensionElements>
-        <activiti:in sourceExpression="${java.lang.Math.floorDiv(xLength, xFraction)/(xLength % xFraction)}" target="iterationCount"></activiti:in>
-      </extensionElements>
-      <multiInstanceLoopCharacteristics isSequential="true">
-        <loopCardinality>${iterationCount}</loopCardinality>
-      </multiInstanceLoopCharacteristics>
-    </callActivity>
-    <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="searchForCube"></sequenceFlow>
-    <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="cleanUpCubeFinder"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_cubeFinderMain">
     <bpmndi:BPMNPlane bpmnElement="cubeFinderMain" id="BPMNPlane_cubeFinderMain">

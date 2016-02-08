@@ -11,13 +11,13 @@
     <sequenceFlow id="flow4" sourceRef="turnRightBeforeRight" targetRef="walkRightAtTop"></sequenceFlow>
     <callActivity id="walkUp" name="Walk Up" calledElement="walk">
       <extensionElements>
-        <activiti:in source="xLength" target="distance"></activiti:in>
+        <activiti:in source="yLength" target="distance"></activiti:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow5" sourceRef="walkUp" targetRef="turnRightBeforeRight"></sequenceFlow>
     <callActivity id="walkRightAtTop" name="Walk Right At Top" calledElement="walk">
       <extensionElements>
-        <activiti:in source="yFraction" target="distance"></activiti:in>
+        <activiti:in source="xFraction" target="distance"></activiti:in>
       </extensionElements>
     </callActivity>
     <callActivity id="turnRightBeforeDown" name="Turn Right Before Down" calledElement="turn">
@@ -26,7 +26,11 @@
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow6" sourceRef="walkRightAtTop" targetRef="turnRightBeforeDown"></sequenceFlow>
-    <callActivity id="walkDown" name="Walk Down"></callActivity>
+    <callActivity id="walkDown" name="Walk Down" calledElement="walk">
+      <extensionElements>
+        <activiti:in source="yLength" target="distance"></activiti:in>
+      </extensionElements>
+    </callActivity>
     <sequenceFlow id="flow7" sourceRef="turnRightBeforeDown" targetRef="walkDown"></sequenceFlow>
     <callActivity id="turnLeftBeforeLeft" name="Turn Left Before Left" calledElement="turn">
       <extensionElements>

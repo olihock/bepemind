@@ -16,6 +16,7 @@ import org.junit.Test;
 public class ProcessTestCubeFinderMain {
 
 	private String mainFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\CubeFinderMain.bpmn";
+	private String searchFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Search.bpmn";
 	private String walkFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Walk.bpmn";
 	private String turnFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Turn.bpmn";
 
@@ -28,6 +29,7 @@ public class ProcessTestCubeFinderMain {
 
 		repositoryService.createDeployment()
 			.addInputStream("cubeFinderMain.bpmn20.xml", new FileInputStream(mainFileName))
+			.addInputStream("search.bpmn20.xml", new FileInputStream(searchFileName))
 			.addInputStream("walk.bpmn20.xml", new FileInputStream(walkFileName))
 			.addInputStream("turn.bpmn20.xml", new FileInputStream(turnFileName))
 		.deploy();
