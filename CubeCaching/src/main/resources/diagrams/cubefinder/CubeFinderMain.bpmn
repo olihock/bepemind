@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeFinderMain">
   <process id="cubeFinderMain" name="Cube Finder Main" isExecutable="true">
-    <serviceTask id="initialise" name="Initialise" activiti:class="com.videaps.cubefinder.Initialiser">
+    <serviceTask id="initialiseCubeFinder" name="Initialise Cube Finder" activiti:class="com.videaps.cubefinder.Initialiser">
       <extensionElements>
         <activiti:field name="motorA">
           <activiti:string><![CDATA[M]]></activiti:string>
@@ -14,18 +14,18 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="cleanUp" name="Clean Up" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <endEvent id="endevent1" name="End"></endEvent>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="initialise"></sequenceFlow>
-    <sequenceFlow id="flow2" sourceRef="cleanUp" targetRef="endevent1"></sequenceFlow>
-    <callActivity id="turnRight" name="Turn Right" calledElement="turn">
+    <serviceTask id="cleanUpCubeFinder" name="Clean Up Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
+    <startEvent id="start" name="Start"></startEvent>
+    <endEvent id="end" name="End"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="initialiseCubeFinder"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="cleanUpCubeFinder" targetRef="end"></sequenceFlow>
+    <callActivity id="turnRightBeforeRight" name="Turn Right Before Right" calledElement="turn">
       <extensionElements>
         <activiti:in sourceExpression="right" target="direction"></activiti:in>
       </extensionElements>
     </callActivity>
-    <sequenceFlow id="flow3" sourceRef="initialise" targetRef="walkUp"></sequenceFlow>
-    <sequenceFlow id="flow4" sourceRef="turnRight" targetRef="cleanUp"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="walkUp"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="turnRightBeforeRight" targetRef="walkRightAtTop"></sequenceFlow>
     <dataObject id="host" name="host" itemSubjectRef="xsd:string">
       <extensionElements>
         <activiti:value>192.168.173.46</activiti:value>
@@ -51,47 +51,121 @@
         <activiti:in source="xLength" target="distance"></activiti:in>
       </extensionElements>
     </callActivity>
-    <sequenceFlow id="flow5" sourceRef="walkUp" targetRef="turnRight"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="walkUp" targetRef="turnRightBeforeRight"></sequenceFlow>
+    <callActivity id="walkRightAtTop" name="Walk Right At Top" calledElement="walk">
+      <extensionElements>
+        <activiti:in source="yFraction" target="distance"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <callActivity id="turnRightBeforeDown" name="Turn Right Before Down" calledElement="turn">
+      <extensionElements>
+        <activiti:in sourceExpression="right" target="direction"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow6" sourceRef="walkRightAtTop" targetRef="turnRightBeforeDown"></sequenceFlow>
+    <callActivity id="walkDown" name="Walk Down"></callActivity>
+    <sequenceFlow id="flow7" sourceRef="turnRightBeforeDown" targetRef="walkDown"></sequenceFlow>
+    <callActivity id="turnLeftBeforeLeft" name="Turn Left Before Left" calledElement="turn">
+      <extensionElements>
+        <activiti:in sourceExpression="left" target="direction"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow8" sourceRef="walkDown" targetRef="turnLeftBeforeLeft"></sequenceFlow>
+    <callActivity id="walkLeftAtBottom" name="Walk Left At Bottom" calledElement="walk">
+      <extensionElements>
+        <activiti:in source="xFraction" target="distance"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow9" sourceRef="turnLeftBeforeLeft" targetRef="walkLeftAtBottom"></sequenceFlow>
+    <callActivity id="turnLeftBeforeIterationEnd" name="Turn Left Before Iteration End" calledElement="turn">
+      <extensionElements>
+        <activiti:in sourceExpression="left" target="direction"></activiti:in>
+      </extensionElements>
+    </callActivity>
+    <sequenceFlow id="flow10" sourceRef="walkLeftAtBottom" targetRef="turnLeftBeforeIterationEnd"></sequenceFlow>
+    <sequenceFlow id="flow11" sourceRef="turnLeftBeforeIterationEnd" targetRef="cleanUpCubeFinder"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_cubeFinderMain">
     <bpmndi:BPMNPlane bpmnElement="cubeFinderMain" id="BPMNPlane_cubeFinderMain">
-      <bpmndi:BPMNShape bpmnElement="initialise" id="BPMNShape_initialise">
-        <omgdc:Bounds height="55.0" width="105.0" x="100.0" y="180.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="initialiseCubeFinder" id="BPMNShape_initialiseCubeFinder">
+        <omgdc:Bounds height="55.0" width="105.0" x="100.0" y="290.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="cleanUp" id="BPMNShape_cleanUp">
-        <omgdc:Bounds height="55.0" width="105.0" x="652.0" y="190.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="cleanUpCubeFinder" id="BPMNShape_cleanUpCubeFinder">
+        <omgdc:Bounds height="55.0" width="105.0" x="1120.0" y="290.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="200.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="20.0" y="300.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="820.0" y="200.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="1290.0" y="300.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="turnRight" id="BPMNShape_turnRight">
-        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="43.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="turnRightBeforeRight" id="BPMNShape_turnRightBeforeRight">
+        <omgdc:Bounds height="55.0" width="105.0" x="100.0" y="38.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkUp" id="BPMNShape_walkUp">
-        <omgdc:Bounds height="55.0" width="105.0" x="100.0" y="43.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="100.0" y="162.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="walkRightAtTop" id="BPMNShape_walkRightAtTop">
+        <omgdc:Bounds height="55.0" width="105.0" x="300.0" y="38.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnRightBeforeDown" id="BPMNShape_turnRightBeforeDown">
+        <omgdc:Bounds height="55.0" width="105.0" x="510.0" y="38.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="walkDown" id="BPMNShape_walkDown">
+        <omgdc:Bounds height="55.0" width="105.0" x="510.0" y="162.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnLeftBeforeLeft" id="BPMNShape_turnLeftBeforeLeft">
+        <omgdc:Bounds height="55.0" width="105.0" x="510.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="walkLeftAtBottom" id="BPMNShape_walkLeftAtBottom">
+        <omgdc:Bounds height="55.0" width="105.0" x="720.0" y="290.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnLeftBeforeIterationEnd" id="BPMNShape_turnLeftBeforeIterationEnd">
+        <omgdc:Bounds height="55.0" width="105.0" x="920.0" y="290.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="65.0" y="217.0"></omgdi:waypoint>
-        <omgdi:waypoint x="100.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="55.0" y="317.0"></omgdi:waypoint>
+        <omgdi:waypoint x="100.0" y="317.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="757.0" y="217.0"></omgdi:waypoint>
-        <omgdi:waypoint x="820.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1225.0" y="317.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1290.0" y="317.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="152.0" y="180.0"></omgdi:waypoint>
-        <omgdi:waypoint x="152.0" y="98.0"></omgdi:waypoint>
+        <omgdi:waypoint x="152.0" y="290.0"></omgdi:waypoint>
+        <omgdi:waypoint x="152.0" y="217.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="352.0" y="98.0"></omgdi:waypoint>
-        <omgdi:waypoint x="704.0" y="190.0"></omgdi:waypoint>
+        <omgdi:waypoint x="205.0" y="65.0"></omgdi:waypoint>
+        <omgdi:waypoint x="300.0" y="65.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="205.0" y="70.0"></omgdi:waypoint>
-        <omgdi:waypoint x="300.0" y="70.0"></omgdi:waypoint>
+        <omgdi:waypoint x="152.0" y="162.0"></omgdi:waypoint>
+        <omgdi:waypoint x="152.0" y="93.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="405.0" y="65.0"></omgdi:waypoint>
+        <omgdi:waypoint x="510.0" y="65.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="562.0" y="93.0"></omgdi:waypoint>
+        <omgdi:waypoint x="562.0" y="162.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="562.0" y="217.0"></omgdi:waypoint>
+        <omgdi:waypoint x="562.0" y="290.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="615.0" y="317.0"></omgdi:waypoint>
+        <omgdi:waypoint x="720.0" y="317.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="825.0" y="317.0"></omgdi:waypoint>
+        <omgdi:waypoint x="920.0" y="317.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="1025.0" y="317.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1120.0" y="317.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
