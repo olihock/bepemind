@@ -6,7 +6,7 @@
     <callActivity id="walkUp" name="Walk Up" calledElement="walking">
       <extensionElements>
         <activiti:in sourceExpression="${yLength}" target="distance"></activiti:in>
-        <activiti:in sourceExpression="up" target="direction"></activiti:in>
+        <activiti:in sourceExpression="${loopCounter}" target="index"></activiti:in>
       </extensionElements>
       <multiInstanceLoopCharacteristics isSequential="true">
         <loopCardinality>${ ( xLength / xFraction ) }</loopCardinality>

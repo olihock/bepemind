@@ -18,42 +18,28 @@
 */
 package com.videaps.sandbox;
 
-import java.text.SimpleDateFormat;
-
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.impl.el.FixedValue;
-import org.activiti.engine.impl.el.JuelExpression;
 
 
 public class WalkingService implements JavaDelegate {
 
-	FixedValue whoAmI;
-	JuelExpression immediateReturn;
-	private JuelExpression direction;
-	private JuelExpression degrees;
-	
-	SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss.S");
+	private FixedValue direction;
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		
-		Boolean walkUpValue = (Boolean) direction.getValue(execution);
-		System.out.println("walkUp="+walkUpValue);
+		Integer index = execution.getVariable("index", Integer.class);
+		System.out.println("index="+index);
 		
-		Long degreesValue = (Long) degrees.getValue(execution);
-		System.out.println("degreesValue="+degreesValue);
-
-		Boolean immediateReturnValue = (Boolean) immediateReturn.getValue(execution);
-		System.out.println("immediateReturn="+immediateReturnValue);
-		if(!immediateReturnValue) {
-			Integer distance = execution.getVariable("distance", Integer.class);
-
-			System.out.println("Walking for "+distance+" cm.");
-			
-			Thread.sleep(Math.max(distance*10, 5));
-		}
+		String directionValue = (String) direction.getValue(execution);
 		
+		Integer distance = execution.getVariable("distance", Integer.class);
+		
+		System.out.println("Walking "+directionValue+" for "+distance+" cm.");
+		
+		Thread.sleep(Math.max(distance*10, 5));
 	}
 
 }

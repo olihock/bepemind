@@ -29,7 +29,7 @@ import lejos.remote.ev3.RMIRegulatedMotor;
 public class TurnDelegate implements JavaDelegate {
 
 	private FixedValue motorPort;
-	private JuelExpression turnDirection;
+	private JuelExpression direction;
 	private JuelExpression rotationDegrees;
 
 	@Override
@@ -40,8 +40,8 @@ public class TurnDelegate implements JavaDelegate {
 			
 			Long rotationDegreesValue = (Long) rotationDegrees.getValue(execution);
 			
-			Boolean turnDirectionValue = (Boolean) turnDirection.getValue(execution);
-			if(!turnDirectionValue) {
+			Boolean directionValue = (Boolean) direction.getValue(execution);
+			if(directionValue) {
 				rotationDegreesValue = -rotationDegreesValue;
 			}
 			

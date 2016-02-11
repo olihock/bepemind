@@ -19,13 +19,20 @@
           <activiti:string><![CDATA[C]]></activiti:string>
         </activiti:field>
         <activiti:field name="immediateReturn">
-          <activiti:expression><![CDATA[${false}]]></activiti:expression>
+          <activiti:expression><![CDATA[${true}]]></activiti:expression>
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <sequenceFlow id="flow1" sourceRef="start" targetRef="rotateLeftMotor"></sequenceFlow>
-    <sequenceFlow id="flow2" sourceRef="rotateLeftMotor" targetRef="rotateRightMotor"></sequenceFlow>
-    <sequenceFlow id="flow3" sourceRef="rotateRightMotor" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="parallelgateway1"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="parallelgateway2" targetRef="waitForCompletion"></sequenceFlow>
+    <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
+    <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
+    <serviceTask id="waitForCompletion" name="Wait For Completion" activiti:class="com.videaps.mindstorms.ev3.WaitDelegate"></serviceTask>
+    <sequenceFlow id="flow4" sourceRef="waitForCompletion" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rotateLeftMotor"></sequenceFlow>
+    <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="rotateRightMotor"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="rotateRightMotor" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="rotateLeftMotor" targetRef="parallelgateway2"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walk">
     <bpmndi:BPMNPlane bpmnElement="walk" id="BPMNPlane_walk">
@@ -33,27 +40,54 @@
         <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
-        <omgdc:Bounds height="35.0" width="35.0" x="300.0" y="190.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="780.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="rotateLeftMotor" id="BPMNShape_rotateLeftMotor">
-        <omgdc:Bounds height="55.0" width="105.0" x="140.0" y="120.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="260.0" y="100.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="rotateRightMotor" id="BPMNShape_rotateRightMotor">
-        <omgdc:Bounds height="55.0" width="105.0" x="140.0" y="244.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="260.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
+        <omgdc:Bounds height="40.0" width="40.0" x="140.0" y="187.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
+        <omgdc:Bounds height="40.0" width="40.0" x="450.0" y="187.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="waitForCompletion" id="BPMNShape_waitForCompletion">
+        <omgdc:Bounds height="55.0" width="105.0" x="586.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="67.0" y="190.0"></omgdi:waypoint>
-        <omgdi:waypoint x="67.0" y="147.0"></omgdi:waypoint>
-        <omgdi:waypoint x="140.0" y="147.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="192.0" y="175.0"></omgdi:waypoint>
-        <omgdi:waypoint x="192.0" y="244.0"></omgdi:waypoint>
+        <omgdi:waypoint x="85.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="140.0" y="207.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="245.0" y="271.0"></omgdi:waypoint>
-        <omgdi:waypoint x="317.0" y="271.0"></omgdi:waypoint>
-        <omgdi:waypoint x="317.0" y="225.0"></omgdi:waypoint>
+        <omgdi:waypoint x="490.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="586.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="691.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="780.0" y="207.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
+        <omgdi:waypoint x="160.0" y="187.0"></omgdi:waypoint>
+        <omgdi:waypoint x="160.0" y="127.0"></omgdi:waypoint>
+        <omgdi:waypoint x="260.0" y="127.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
+        <omgdi:waypoint x="160.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="160.0" y="278.0"></omgdi:waypoint>
+        <omgdi:waypoint x="260.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="365.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="227.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
+        <omgdi:waypoint x="365.0" y="127.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="127.0"></omgdi:waypoint>
+        <omgdi:waypoint x="470.0" y="187.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

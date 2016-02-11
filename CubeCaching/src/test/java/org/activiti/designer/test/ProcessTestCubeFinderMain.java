@@ -19,6 +19,8 @@ public class ProcessTestCubeFinderMain {
 	private String searchFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Search.bpmn";
 	private String walkFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Walk.bpmn";
 	private String turnFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Turn.bpmn";
+	private String walkRightAndDownFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\WalkRightAndUp.bpmn";
+	private String walkRightAndUpFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\WalkRightAndDown.bpmn";
 
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule();
@@ -32,6 +34,8 @@ public class ProcessTestCubeFinderMain {
 			.addInputStream("search.bpmn20.xml", new FileInputStream(searchFileName))
 			.addInputStream("walk.bpmn20.xml", new FileInputStream(walkFileName))
 			.addInputStream("turn.bpmn20.xml", new FileInputStream(turnFileName))
+			.addInputStream("walkRightAndDown.bpmn20.xml", new FileInputStream(walkRightAndDownFileName))
+			.addInputStream("walkRightAndUp.bpmn20.xml", new FileInputStream(walkRightAndUpFileName))
 		.deploy();
 		
 		RuntimeService runtimeService = activitiRule.getRuntimeService();

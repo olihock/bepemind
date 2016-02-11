@@ -9,10 +9,10 @@
           <activiti:string><![CDATA[B]]></activiti:string>
         </activiti:field>
         <activiti:field name="rotationDegrees">
-          <activiti:expression><![CDATA[${475}]]></activiti:expression>
+          <activiti:expression><![CDATA[${465}]]></activiti:expression>
         </activiti:field>
-        <activiti:field name="turnDirection">
-          <activiti:expression><![CDATA[${direction == 'right'}]]></activiti:expression>
+        <activiti:field name="direction">
+          <activiti:expression><![CDATA[${clockwise}]]></activiti:expression>
         </activiti:field>
       </extensionElements>
     </serviceTask>
@@ -22,10 +22,10 @@
           <activiti:string><![CDATA[C]]></activiti:string>
         </activiti:field>
         <activiti:field name="rotationDegrees">
-          <activiti:expression><![CDATA[${475}]]></activiti:expression>
+          <activiti:expression><![CDATA[${465}]]></activiti:expression>
         </activiti:field>
-        <activiti:field name="turnDirection">
-          <activiti:expression><![CDATA[${direction == 'left'}]]></activiti:expression>
+        <activiti:field name="direction">
+          <activiti:expression><![CDATA[${!clockwise}]]></activiti:expression>
         </activiti:field>
       </extensionElements>
     </serviceTask>
