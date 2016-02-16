@@ -3,28 +3,28 @@
   <process id="search" name="Search" isExecutable="true">
     <startEvent id="start" name="Start"></startEvent>
     <endEvent id="end" name="End"></endEvent>
-    <sequenceFlow id="flow12" sourceRef="start" targetRef="UpOrDown"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="start" targetRef="upOrDown"></sequenceFlow>
     <callActivity id="walkRightAndDown" name="Walk Right And Down" calledElement="walkRightAndDown">
       <extensionElements>
         <activiti:in source="xFraction" target="xFraction"></activiti:in>
         <activiti:in source="yLength" target="yLength"></activiti:in>
       </extensionElements>
     </callActivity>
-    <exclusiveGateway id="UpOrDown" name="Up Or Down"></exclusiveGateway>
+    <exclusiveGateway id="upOrDown" name="Up Or Down"></exclusiveGateway>
     <callActivity id="walkRightAndUp" name="Walk Right And Up" calledElement="walkRightAndUp">
       <extensionElements>
         <activiti:in source="xFraction" target="xFraction"></activiti:in>
         <activiti:in source="yLength" target="yLength"></activiti:in>
       </extensionElements>
     </callActivity>
-    <sequenceFlow id="up" name="Up" sourceRef="UpOrDown" targetRef="walkRightAndUp">
+    <sequenceFlow id="up" name="Up" sourceRef="upOrDown" targetRef="walkRightAndUp">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="down" name="Down" sourceRef="UpOrDown" targetRef="walkRightAndDown">
+    <sequenceFlow id="down" name="Down" sourceRef="upOrDown" targetRef="walkRightAndDown">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 0}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow16" sourceRef="walkRightAndDown" targetRef="end"></sequenceFlow>
-    <sequenceFlow id="flow17" sourceRef="walkRightAndUp" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow18" sourceRef="walkRightAndUp" targetRef="end"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_search">
     <bpmndi:BPMNPlane bpmnElement="search" id="BPMNPlane_search">
@@ -37,7 +37,7 @@
       <bpmndi:BPMNShape bpmnElement="walkRightAndDown" id="BPMNShape_walkRightAndDown">
         <omgdc:Bounds height="55.0" width="105.0" x="386.0" y="90.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="UpOrDown" id="BPMNShape_UpOrDown">
+      <bpmndi:BPMNShape bpmnElement="upOrDown" id="BPMNShape_upOrDown">
         <omgdc:Bounds height="40.0" width="40.0" x="290.0" y="169.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkRightAndUp" id="BPMNShape_walkRightAndUp">
@@ -52,7 +52,7 @@
         <omgdi:waypoint x="310.0" y="280.0"></omgdi:waypoint>
         <omgdi:waypoint x="490.0" y="280.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="100.0" x="321.0" y="239.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="13.0" x="321.0" y="239.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="down" id="BPMNEdge_down">
@@ -68,9 +68,9 @@
         <omgdi:waypoint x="647.0" y="117.0"></omgdi:waypoint>
         <omgdi:waypoint x="647.0" y="172.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17">
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
         <omgdi:waypoint x="595.0" y="280.0"></omgdi:waypoint>
-        <omgdi:waypoint x="647.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="647.0" y="279.0"></omgdi:waypoint>
         <omgdi:waypoint x="647.0" y="207.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/WalkRightAndDown">
   <process id="walkRightAndDown" name="Walk Right And Down" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <endEvent id="endevent1" name="End"></endEvent>
+    <startEvent id="startevent2" name="Start Event 2"></startEvent>
+    <endEvent id="endevent2" name="End Event 2"></endEvent>
     <callActivity id="turnRight1stTime" name="Turn Right 1st Time" calledElement="turn">
       <extensionElements>
-        <activiti:in sourceExpression="${true}" target="clockwise"></activiti:in>
-      </extensionElements>
-    </callActivity>
-    <callActivity id="walkDown" name="Walk Down" calledElement="walk">
-      <extensionElements>
-        <activiti:in source="yLength" target="distance"></activiti:in>
+        <activiti:in sourceExpression="${false}" target="clockwise"></activiti:in>
       </extensionElements>
     </callActivity>
     <callActivity id="walkRight" name="Walk Right" calledElement="walk">
@@ -20,34 +15,62 @@
     </callActivity>
     <callActivity id="turnRight2ndTime" name="Turn Right 2nd Time" calledElement="turn">
       <extensionElements>
-        <activiti:in sourceExpression="${true}" target="clockwise"></activiti:in>
+        <activiti:in sourceExpression="${false}" target="clockwise"></activiti:in>
       </extensionElements>
     </callActivity>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="turnRight1stTime"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="startevent2" targetRef="turnRight1stTime"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="turnRight1stTime" targetRef="walkRight"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="walkRight" targetRef="turnRight2ndTime"></sequenceFlow>
-    <sequenceFlow id="flow4" sourceRef="turnRight2ndTime" targetRef="walkDown"></sequenceFlow>
-    <sequenceFlow id="flow5" sourceRef="walkDown" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow8" sourceRef="turnRight2ndTime" targetRef="subprocess1"></sequenceFlow>
+    <subProcess id="subprocess1" name="Sub Process">
+      <multiInstanceLoopCharacteristics isSequential="true">
+        <loopCardinality>${ yLength / 10 }</loopCardinality>
+      </multiInstanceLoopCharacteristics>
+      <callActivity id="walkDown" name="Walk Down" calledElement="walk">
+        <extensionElements>
+          <activiti:in sourceExpression="${10}" target="distance"></activiti:in>
+        </extensionElements>
+      </callActivity>
+      <sequenceFlow id="flow7" sourceRef="walkDown" targetRef="scanForCube"></sequenceFlow>
+      <callActivity id="scanForCube" name="Scan For Cube" calledElement="scan"></callActivity>
+      <startEvent id="startevent3" name="Start"></startEvent>
+      <endEvent id="endevent3" name="End"></endEvent>
+      <sequenceFlow id="flow10" sourceRef="startevent3" targetRef="walkDown"></sequenceFlow>
+      <sequenceFlow id="flow11" sourceRef="scanForCube" targetRef="endevent3"></sequenceFlow>
+    </subProcess>
+    <sequenceFlow id="flow9" sourceRef="subprocess1" targetRef="endevent2"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walkRightAndDown">
     <bpmndi:BPMNPlane bpmnElement="walkRightAndDown" id="BPMNPlane_walkRightAndDown">
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+      <bpmndi:BPMNShape bpmnElement="startevent2" id="BPMNShape_startevent2">
         <omgdc:Bounds height="35.0" width="35.0" x="30.0" y="130.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="760.0" y="130.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+        <omgdc:Bounds height="35.0" width="35.0" x="565.0" y="560.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="turnRight1stTime" id="BPMNShape_turnRight1stTime">
         <omgdc:Bounds height="55.0" width="105.0" x="170.0" y="60.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="walkDown" id="BPMNShape_walkDown">
-        <omgdc:Bounds height="55.0" width="105.0" x="530.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkRight" id="BPMNShape_walkRight">
         <omgdc:Bounds height="55.0" width="105.0" x="350.0" y="60.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="turnRight2ndTime" id="BPMNShape_turnRight2ndTime">
         <omgdc:Bounds height="55.0" width="105.0" x="530.0" y="60.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="subprocess1" id="BPMNShape_subprocess1">
+        <omgdc:Bounds height="341.0" width="205.0" x="480.0" y="180.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="walkDown" id="BPMNShape_walkDown">
+        <omgdc:Bounds height="55.0" width="105.0" x="530.0" y="270.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scanForCube" id="BPMNShape_scanForCube">
+        <omgdc:Bounds height="55.0" width="105.0" x="530.0" y="360.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent3" id="BPMNShape_startevent3">
+        <omgdc:Bounds height="35.0" width="35.0" x="565.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent3" id="BPMNShape_endevent3">
+        <omgdc:Bounds height="35.0" width="35.0" x="565.0" y="450.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="47.0" y="130.0"></omgdi:waypoint>
@@ -62,14 +85,25 @@
         <omgdi:waypoint x="455.0" y="87.0"></omgdi:waypoint>
         <omgdi:waypoint x="530.0" y="87.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
         <omgdi:waypoint x="582.0" y="115.0"></omgdi:waypoint>
         <omgdi:waypoint x="582.0" y="180.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="635.0" y="207.0"></omgdi:waypoint>
-        <omgdi:waypoint x="777.0" y="207.0"></omgdi:waypoint>
-        <omgdi:waypoint x="777.0" y="165.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7">
+        <omgdi:waypoint x="582.0" y="325.0"></omgdi:waypoint>
+        <omgdi:waypoint x="582.0" y="360.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
+        <omgdi:waypoint x="582.0" y="245.0"></omgdi:waypoint>
+        <omgdi:waypoint x="582.0" y="270.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
+        <omgdi:waypoint x="582.0" y="415.0"></omgdi:waypoint>
+        <omgdi:waypoint x="582.0" y="450.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="582.0" y="521.0"></omgdi:waypoint>
+        <omgdi:waypoint x="582.0" y="560.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

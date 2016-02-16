@@ -56,7 +56,6 @@ public class MotorDelegate implements JavaDelegate {
 		// This variable has been set in the Wheeler process, as it belongs to the motors
 		// that drive the Cube Finder. For example, one turn of the wheels gets the wheeler 10 cm forward.
 		String circumferenceVariable = ""+execution.getVariable("circumference");
-		// FIXME Oliver geVariable return null, even though it is set in the dataObject of the calling process Wheeler.
 
 		if(FUNCTION_ROTATE.equals(motorFunctionValue)) {
 			// This variable has been set in the super process, as it defines the rectangle within the 

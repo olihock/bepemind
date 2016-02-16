@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/Scan">
+  <process id="scan" name="Scan" isExecutable="true">
+    <startEvent id="start" name="Start"></startEvent>
+    <endEvent id="end" name="End"></endEvent>
+    <serviceTask id="turnLeft" name="Turn Left" activiti:class="com.videaps.cubefinder.ev3.RotateDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="angle">
+          <activiti:expression><![CDATA[${45}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="scanLeftSide" name="Scan Left Side" activiti:class="com.videaps.mindstorms.ev3.DistanceDelegate">
+      <extensionElements>
+        <activiti:field name="sensorPort">
+          <activiti:string><![CDATA[S1]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="turnBackFromLeft" name="Turn Back From Left" activiti:class="com.videaps.cubefinder.ev3.RotateDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[B]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="angle">
+          <activiti:expression><![CDATA[${-45}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="turnRight" name="Turn Right" activiti:class="com.videaps.cubefinder.ev3.RotateDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="angle">
+          <activiti:expression><![CDATA[${45}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow3" sourceRef="scanLeftSide" targetRef="turnBackFromLeft"></sequenceFlow>
+    <serviceTask id="scanRightSide" name="Scan Right Side" activiti:class="com.videaps.mindstorms.ev3.DistanceDelegate">
+      <extensionElements>
+        <activiti:field name="sensorPort">
+          <activiti:string><![CDATA[S1]]></activiti:string>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <serviceTask id="turnBackFromRight" name="Turn Back From Right" activiti:class="com.videaps.cubefinder.ev3.RotateDelegate">
+      <extensionElements>
+        <activiti:field name="motorPort">
+          <activiti:string><![CDATA[C]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="angle">
+          <activiti:expression><![CDATA[${-45}]]></activiti:expression>
+        </activiti:field>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="flow9" sourceRef="scanRightSide" targetRef="turnBackFromRight"></sequenceFlow>
+    <sequenceFlow id="flow12" sourceRef="start" targetRef="turnLeft"></sequenceFlow>
+    <sequenceFlow id="flow13" sourceRef="turnLeft" targetRef="scanLeftSide"></sequenceFlow>
+    <sequenceFlow id="flow14" sourceRef="turnBackFromLeft" targetRef="turnRight"></sequenceFlow>
+    <sequenceFlow id="flow15" sourceRef="turnRight" targetRef="scanRightSide"></sequenceFlow>
+    <sequenceFlow id="flow16" sourceRef="turnBackFromRight" targetRef="end"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_scan">
+    <bpmndi:BPMNPlane bpmnElement="scan" id="BPMNPlane_scan">
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="136.0" y="140.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="780.0" y="330.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnLeft" id="BPMNShape_turnLeft">
+        <omgdc:Bounds height="55.0" width="105.0" x="256.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scanLeftSide" id="BPMNShape_scanLeftSide">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnBackFromLeft" id="BPMNShape_turnBackFromLeft">
+        <omgdc:Bounds height="55.0" width="105.0" x="586.0" y="130.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnRight" id="BPMNShape_turnRight">
+        <omgdc:Bounds height="55.0" width="105.0" x="256.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="scanRightSide" id="BPMNShape_scanRightSide">
+        <omgdc:Bounds height="55.0" width="105.0" x="420.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="turnBackFromRight" id="BPMNShape_turnBackFromRight">
+        <omgdc:Bounds height="55.0" width="105.0" x="586.0" y="320.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="525.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="586.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="525.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="586.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12">
+        <omgdi:waypoint x="171.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="256.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13">
+        <omgdi:waypoint x="361.0" y="157.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="157.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14">
+        <omgdi:waypoint x="638.0" y="185.0"></omgdi:waypoint>
+        <omgdi:waypoint x="638.0" y="262.0"></omgdi:waypoint>
+        <omgdi:waypoint x="308.0" y="262.0"></omgdi:waypoint>
+        <omgdi:waypoint x="308.0" y="320.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
+        <omgdi:waypoint x="361.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="420.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
+        <omgdi:waypoint x="691.0" y="347.0"></omgdi:waypoint>
+        <omgdi:waypoint x="780.0" y="347.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

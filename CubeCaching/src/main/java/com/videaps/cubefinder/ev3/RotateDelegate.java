@@ -16,7 +16,7 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder.delegates;
+package com.videaps.cubefinder.ev3;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
@@ -27,33 +27,44 @@ import com.videaps.mindstorms.ev3.Brick;
 
 import lejos.remote.ev3.RMIRegulatedMotor;
 
-public class WalkDelegate implements JavaDelegate {
+public class RotateDelegate implements JavaDelegate {
 
-	/** Wheel circumference which is used to calculate the distance a wheel walks for one turn. */
-	public static final int circumference = 10;
-	
 	private FixedValue motorPort;
+	private JuelExpression angle;
 	private JuelExpression immediateReturn;
 
-	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		String motorPortValue = (String) motorPort.getValue(execution);
-		Boolean immediateReturnValue = (Boolean) immediateReturn.getValue(execution);
+		Long angleValue = readAngle(execution);
+		Boolean immediateReturnValue = readImmediateReturn(execution);
 
 		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(motorPortValue);
+		motor.rotate(angleValue.intValue(), immediateReturnValue);
+	}
 
-		try {
-			Long distanceValue = execution.getVariable("distance", Long.class);
-			Long rotationDegrees = ( distanceValue / circumference ) * 360;
-			
-			motor.rotate(rotationDegrees.intValue(), immediateReturnValue);
-		} catch(Exception e) {
-			Brick.getInstance().closeMotors();
-			Brick.getInstance().closeSensors();
-			throw e;
+
+	private Long readAngle(DelegateExecution execution) {
+		Object angleObject = angle.getValue(execution);
+		Long angleValue = 0L;
+		if(angleObject != null) {
+			if(angleObject instanceof Number) {
+				angleValue = ((Number)angleObject).longValue();
+			} else {
+				angleValue = (Long) angleObject;
+			}
 		}
+		return angleValue;
+	}
 
+	
+	private Boolean readImmediateReturn(DelegateExecution execution) {
+		Object immediateReturnObject = immediateReturn.getValue(execution);
+		Boolean immediateReturnValue = Boolean.FALSE;
+		if(immediateReturnObject != null) {
+			immediateReturnValue = (Boolean) immediateReturnObject;
+		}
+		return immediateReturnValue;
 	}
 
 }

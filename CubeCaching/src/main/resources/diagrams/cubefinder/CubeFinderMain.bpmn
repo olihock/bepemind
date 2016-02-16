@@ -32,32 +32,32 @@
     </callActivity>
     <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="walkUp"></sequenceFlow>
     <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="cleanUpCubeFinder"></sequenceFlow>
-    <dataObject id="host" name="host" itemSubjectRef="xsd:string">
-      <extensionElements>
-        <activiti:value>192.168.173.109</activiti:value>
-      </extensionElements>
-    </dataObject>
-    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:string">
-      <extensionElements>
-        <activiti:value>40</activiti:value>
-      </extensionElements>
-    </dataObject>
-    <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:int">
-      <extensionElements>
-        <activiti:value>100</activiti:value>
-      </extensionElements>
-    </dataObject>
-    <dataObject id="xFraction" name="xFraction" itemSubjectRef="xsd:int">
-      <extensionElements>
-        <activiti:value>20</activiti:value>
-      </extensionElements>
-    </dataObject>
     <callActivity id="walkUp" name="Walk Up" calledElement="walk">
       <extensionElements>
         <activiti:in source="yLength" target="distance"></activiti:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow5" sourceRef="walkUp" targetRef="searchForCube"></sequenceFlow>
+    <dataObject id="host" name="host" itemSubjectRef="xsd:string">
+      <extensionElements>
+        <activiti:value>192.168.173.223</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:long">
+      <extensionElements>
+        <activiti:value>40</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:long">
+      <extensionElements>
+        <activiti:value>100</activiti:value>
+      </extensionElements>
+    </dataObject>
+    <dataObject id="xFraction" name="xFraction" itemSubjectRef="xsd:long">
+      <extensionElements>
+        <activiti:value>20</activiti:value>
+      </extensionElements>
+    </dataObject>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_cubeFinderMain">
     <bpmndi:BPMNPlane bpmnElement="cubeFinderMain" id="BPMNPlane_cubeFinderMain">
