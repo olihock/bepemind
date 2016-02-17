@@ -16,11 +16,34 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder.ev3;
+package com.videaps.mindstorms.ral.motor;
 
-public interface Params {
+import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.delegate.JavaDelegate;
+import org.activiti.engine.impl.el.FixedValue;
+import org.activiti.engine.impl.el.JuelExpression;
 
-	/** Wheel circumference which is used to calculate the distance a wheel walks for one turn. */
-	public static final long CIRCUMFERENCE = 10L;
+
+public class MotorBase implements JavaDelegate {
+
+	protected FixedValue port; // One out of A, B, C, D
+	protected JuelExpression acceleration;
+
+	@Override
+	public void execute(DelegateExecution execution) throws Exception {
+		if(port == null) {
+			throw new IllegalArgumentException("port shall be defined");
+		}
+		String portValue = (String) port.getValue(execution);
+
+		Long accelerationValue = null;
+		if(acceleration != null) {
+			accelerationValue = (Long) acceleration.getValue(execution);
+		}
+
+		System.out.println("port="+portValue);
+		System.out.println("acceleration="+accelerationValue);
+
+	}
 
 }

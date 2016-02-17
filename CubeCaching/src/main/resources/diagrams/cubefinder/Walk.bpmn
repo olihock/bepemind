@@ -3,29 +3,29 @@
   <process id="walk" name="Walk" isExecutable="true">
     <startEvent id="start" name="Start"></startEvent>
     <endEvent id="end" name="End"></endEvent>
-    <serviceTask id="rotateLeftMotor" name="Rotate Left Motor" activiti:class="com.videaps.cubefinder.ev3.RotateDelegate">
+    <serviceTask id="rotateLeftMotor" name="Rotate Left Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
       <extensionElements>
-        <activiti:field name="motorPort">
-          <activiti:string><![CDATA[B]]></activiti:string>
-        </activiti:field>
         <activiti:field name="immediateReturn">
           <activiti:expression><![CDATA[${true}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="angle">
           <activiti:expression><![CDATA[${ ( distance / 10 ) * 360 }]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="port">
+          <activiti:string><![CDATA[B]]></activiti:string>
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="rotateRightMotor" name="Rotate Right Motor" activiti:class="com.videaps.cubefinder.ev3.RotateDelegate">
+    <serviceTask id="rotateRightMotor" name="Rotate Right Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
       <extensionElements>
-        <activiti:field name="motorPort">
-          <activiti:string><![CDATA[C]]></activiti:string>
-        </activiti:field>
         <activiti:field name="immediateReturn">
           <activiti:expression><![CDATA[${true}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="angle">
           <activiti:expression><![CDATA[${ ( distance / 10 ) * 360 }]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="port">
+          <activiti:string><![CDATA[C]]></activiti:string>
         </activiti:field>
       </extensionElements>
     </serviceTask>
@@ -33,7 +33,7 @@
     <sequenceFlow id="flow3" sourceRef="parallelgateway2" targetRef="waitForCompletion"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
-    <serviceTask id="waitForCompletion" name="Wait For Completion" activiti:class="com.videaps.mindstorms.ev3.WaitDelegate"></serviceTask>
+    <serviceTask id="waitForCompletion" name="Wait For Completion" activiti:class="com.videaps.mindstorms.ral.WaitBase"></serviceTask>
     <sequenceFlow id="flow4" sourceRef="waitForCompletion" targetRef="end"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rotateLeftMotor"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="rotateRightMotor"></sequenceFlow>

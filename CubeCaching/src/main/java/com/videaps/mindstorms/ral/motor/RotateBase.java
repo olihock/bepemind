@@ -16,34 +16,31 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder.ev3;
+package com.videaps.mindstorms.ral.motor;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.impl.el.FixedValue;
 import org.activiti.engine.impl.el.JuelExpression;
 
-import com.videaps.mindstorms.ev3.Brick;
+public class RotateBase extends MotorBase {
 
-import lejos.remote.ev3.RMIRegulatedMotor;
-
-public class RotateDelegate implements JavaDelegate {
-
-	private FixedValue motorPort;
 	private JuelExpression angle;
 	private JuelExpression immediateReturn;
 
+	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		String motorPortValue = (String) motorPort.getValue(execution);
+		super.execute(execution);
+		
+		System.out.println(execution.getCurrentActivityName());
+		
 		Long angleValue = readAngle(execution);
 		Boolean immediateReturnValue = readImmediateReturn(execution);
-
-		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(motorPortValue);
-		motor.rotate(angleValue.intValue(), immediateReturnValue);
+		
+		System.out.println("angle="+angleValue);
+		System.out.println("immediateReturn="+immediateReturnValue);
 	}
 
-
+	
 	private Long readAngle(DelegateExecution execution) {
 		Object angleObject = angle.getValue(execution);
 		Long angleValue = 0L;
@@ -56,15 +53,17 @@ public class RotateDelegate implements JavaDelegate {
 		}
 		return angleValue;
 	}
-
 	
 	private Boolean readImmediateReturn(DelegateExecution execution) {
-		Object immediateReturnObject = immediateReturn.getValue(execution);
 		Boolean immediateReturnValue = Boolean.FALSE;
-		if(immediateReturnObject != null) {
-			immediateReturnValue = (Boolean) immediateReturnObject;
+		if(immediateReturn != null) {
+			Object immediateReturnObject = immediateReturn.getValue(execution);
+			if(immediateReturnObject != null) {
+				immediateReturnValue = (Boolean) immediateReturnObject;
+			}
 		}
 		return immediateReturnValue;
 	}
+
 
 }

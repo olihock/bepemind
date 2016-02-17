@@ -40,20 +40,37 @@ public class Brick extends RemoteEV3 {
 	private Map<String, RMISampleProvider> sensorMap = new HashMap<String, RMISampleProvider>();
 	
 	
-	private Brick(String host) throws RemoteException, MalformedURLException, NotBoundException {
+	private Brick(
+			String host, 
+			char motorAType, 
+			char motorBType, 
+			char motorCType
+		) throws RemoteException, MalformedURLException, NotBoundException {
 		super(host);
+		motorMap.put("A", super.createRegulatedMotor("A", motorAType));
+		motorMap.put("B", super.createRegulatedMotor("B", motorBType));
+		motorMap.put("C", super.createRegulatedMotor("C", motorCType));
+		// TODO Oliver Add motor D creation.
+		sensorMap.put("S1", super.createSampleProvider("S1", "lejos.hardware.sensor.EV3IRSensor", "Distance"));
+		// TODO Oliver Add sensor 2 creation.
+		// TODO Oliver Add sensor 3 creation.
 	}
 	
-	public static Brick intitialise(String host) throws RemoteException, MalformedURLException, NotBoundException {
+	public static Brick intitialise(
+			String host,
+			char motorAType,
+			char motorBType,
+			char motorCType
+		) throws RemoteException, MalformedURLException, NotBoundException {
 		if(instance == null) {
-			instance = new Brick(host);
+			instance = new Brick(host, motorAType, motorBType, motorCType);
 		}
 		return instance;
 	}
 	
 	public static Brick getInstance() {
 		if(instance == null) {
-			throw new IllegalArgumentException("This Singleton needs to be initialised. Call getInstance(host) first.");
+			throw new IllegalArgumentException("This Singleton needs to be initialised. Call getInstance(host, aType, bType, cType) first.");
 		}
 		return instance; 
 	}
@@ -70,31 +87,11 @@ public class Brick extends RemoteEV3 {
 		}
 	}
 	
-	@Override
-	public RMIRegulatedMotor createRegulatedMotor(String portName, char motorType) {
-		RMIRegulatedMotor motor = motorMap.get(portName);
-		if(motor == null) {
-			motor = super.createRegulatedMotor(portName, motorType);
-			motorMap.put(portName, motor);
-		}
-		return motor;
-	}
-	
 	public RMIRegulatedMotor getRegulatedMotor(String portName) {
 		RMIRegulatedMotor motor = motorMap.get(portName);
 		return motor;
 	}
 	
-	
-	@Override
-	public RMISampleProvider createSampleProvider(String portName, String sensorName, String modeName) {
-		RMISampleProvider sensor = sensorMap.get(portName);
-		if(sensor == null) {
-			sensor = super.createSampleProvider(portName, sensorName, modeName);
-			sensorMap.put(portName, sensor);
-		}
-		return sensor;
-	}
 	
 	public RMISampleProvider getSampleProvider(String portName) {
 		RMISampleProvider sensor = sensorMap.get(portName);

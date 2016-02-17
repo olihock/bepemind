@@ -1,24 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeFinderMain">
   <process id="cubeFinderMain" name="Cube Finder Main" isExecutable="true">
-    <serviceTask id="initialiseCubeFinder" name="Initialise Cube Finder" activiti:class="com.videaps.cubefinder.Initialiser">
-      <extensionElements>
-        <activiti:field name="motorA">
-          <activiti:string><![CDATA[M]]></activiti:string>
-        </activiti:field>
-        <activiti:field name="motorB">
-          <activiti:string><![CDATA[L]]></activiti:string>
-        </activiti:field>
-        <activiti:field name="motorC">
-          <activiti:string><![CDATA[L]]></activiti:string>
-        </activiti:field>
-      </extensionElements>
-    </serviceTask>
-    <serviceTask id="cleanUpCubeFinder" name="Clean Up Cube Finder" activiti:class="com.videaps.cubefinder.Cleaner"></serviceTask>
+    <serviceTask id="initialise" name="Initialise" activiti:class="com.videaps.cubefinder.InitialiseBase"></serviceTask>
+    <serviceTask id="clean" name="Clean" activiti:class="com.videaps.cubefinder.CleanBase"></serviceTask>
     <startEvent id="start" name="Start"></startEvent>
     <endEvent id="end" name="End"></endEvent>
-    <sequenceFlow id="flow1" sourceRef="start" targetRef="initialiseCubeFinder"></sequenceFlow>
-    <sequenceFlow id="flow2" sourceRef="cleanUpCubeFinder" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="start" targetRef="initialise"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="clean" targetRef="end"></sequenceFlow>
     <callActivity id="searchForCube" name="Search For Cube" calledElement="search">
       <extensionElements>
         <activiti:in source="xLength" target="xLength"></activiti:in>
@@ -30,8 +18,8 @@
         <loopCardinality>${ ( xLength / xFraction ) }</loopCardinality>
       </multiInstanceLoopCharacteristics>
     </callActivity>
-    <sequenceFlow id="flow3" sourceRef="initialiseCubeFinder" targetRef="walkUp"></sequenceFlow>
-    <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="cleanUpCubeFinder"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="initialise" targetRef="walkUp"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="clean"></sequenceFlow>
     <callActivity id="walkUp" name="Walk Up" calledElement="walk">
       <extensionElements>
         <activiti:in source="yLength" target="distance"></activiti:in>
@@ -61,10 +49,10 @@
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_cubeFinderMain">
     <bpmndi:BPMNPlane bpmnElement="cubeFinderMain" id="BPMNPlane_cubeFinderMain">
-      <bpmndi:BPMNShape bpmnElement="initialiseCubeFinder" id="BPMNShape_initialiseCubeFinder">
+      <bpmndi:BPMNShape bpmnElement="initialise" id="BPMNShape_initialise">
         <omgdc:Bounds height="55.0" width="105.0" x="110.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="cleanUpCubeFinder" id="BPMNShape_cleanUpCubeFinder">
+      <bpmndi:BPMNShape bpmnElement="clean" id="BPMNShape_clean">
         <omgdc:Bounds height="55.0" width="105.0" x="620.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">

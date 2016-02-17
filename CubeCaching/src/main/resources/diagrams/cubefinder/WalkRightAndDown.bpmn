@@ -5,7 +5,7 @@
     <endEvent id="endevent2" name="End Event 2"></endEvent>
     <callActivity id="turnRight1stTime" name="Turn Right 1st Time" calledElement="turn">
       <extensionElements>
-        <activiti:in sourceExpression="${false}" target="clockwise"></activiti:in>
+        <activiti:in sourceExpression="${-90}" target="degrees"></activiti:in>
       </extensionElements>
     </callActivity>
     <callActivity id="walkRight" name="Walk Right" calledElement="walk">
@@ -15,7 +15,7 @@
     </callActivity>
     <callActivity id="turnRight2ndTime" name="Turn Right 2nd Time" calledElement="turn">
       <extensionElements>
-        <activiti:in sourceExpression="${false}" target="clockwise"></activiti:in>
+        <activiti:in sourceExpression="${-90}" target="degrees"></activiti:in>
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow1" sourceRef="startevent2" targetRef="turnRight1stTime"></sequenceFlow>
@@ -28,7 +28,7 @@
       </multiInstanceLoopCharacteristics>
       <callActivity id="walkDown" name="Walk Down" calledElement="walk">
         <extensionElements>
-          <activiti:in sourceExpression="${10}" target="distance"></activiti:in>
+          <activiti:in sourceExpression="${ ( 10 / 10 ) * 360 }" target="distance"></activiti:in>
         </extensionElements>
       </callActivity>
       <sequenceFlow id="flow7" sourceRef="walkDown" targetRef="scanForCube"></sequenceFlow>

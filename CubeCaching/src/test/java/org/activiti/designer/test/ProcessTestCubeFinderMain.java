@@ -57,8 +57,13 @@ public class ProcessTestCubeFinderMain {
 			assertNotNull(processInstance.getId());
 			System.out.println("id " + processInstance.getId() + " " + processInstance.getProcessDefinitionId());
 		} catch(Exception e) {
-			Brick.getInstance().closeMotors();
-			Brick.getInstance().closeSensors();
+			try {
+				Brick.getInstance().closeMotors();
+				Brick.getInstance().closeSensors();
+			} catch(IllegalArgumentException illegalArgumentException) {
+				// The ports are closed already or have never been opened, 
+				// so here is nothing to do.
+			}
 			e.printStackTrace(System.err);
 			assertFalse(e.getMessage(), true);
 		}

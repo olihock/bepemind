@@ -16,35 +16,18 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder;
+package com.videaps.mindstorms.ral.sensor;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
 
-import com.videaps.mindstorms.ev3.Brick;
-
-
-/**
- *
- */
-public class Cleaner implements JavaDelegate {
+public class FetchSampleBase extends SensorBase {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		
-		Brick.getInstance().getSampleProvider("S1").close();
-		
-		while(Brick.getInstance().getRegulatedMotor("A").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("A").close();
-		
-		while(Brick.getInstance().getRegulatedMotor("B").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("B").close();
+		super.execute(execution);
 
-		while(Brick.getInstance().getRegulatedMotor("C").isMoving()) {
-		}
-		Brick.getInstance().getRegulatedMotor("C").close();
+		System.out.println(execution.getCurrentActivityName());
+
 	}
 
 }

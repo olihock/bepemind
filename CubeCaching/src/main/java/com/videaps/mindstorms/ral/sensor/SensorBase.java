@@ -16,44 +16,21 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder.delegates;
+package com.videaps.mindstorms.ral.sensor;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 import org.activiti.engine.impl.el.FixedValue;
-import org.activiti.engine.impl.el.JuelExpression;
 
-import com.videaps.mindstorms.ev3.Brick;
+public class SensorBase implements JavaDelegate {
 
-import lejos.remote.ev3.RMIRegulatedMotor;
+	private FixedValue port;
 
-public class WalkDelegate implements JavaDelegate {
-
-	/** Wheel circumference which is used to calculate the distance a wheel walks for one turn. */
-	public static final int circumference = 10;
-	
-	private FixedValue motorPort;
-	private JuelExpression immediateReturn;
-
-	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		String motorPortValue = (String) motorPort.getValue(execution);
-		Boolean immediateReturnValue = (Boolean) immediateReturn.getValue(execution);
+		String portValue = ""+port.getValue(execution);
 
-		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(motorPortValue);
-
-		try {
-			Long distanceValue = execution.getVariable("distance", Long.class);
-			Long rotationDegrees = ( distanceValue / circumference ) * 360;
-			
-			motor.rotate(rotationDegrees.intValue(), immediateReturnValue);
-		} catch(Exception e) {
-			Brick.getInstance().closeMotors();
-			Brick.getInstance().closeSensors();
-			throw e;
-		}
-
+		System.out.println("port="+portValue);
 	}
 
 }
