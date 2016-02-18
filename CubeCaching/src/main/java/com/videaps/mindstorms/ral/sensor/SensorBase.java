@@ -19,18 +19,22 @@
 package com.videaps.mindstorms.ral.sensor;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.impl.el.FixedValue;
 
-public class SensorBase implements JavaDelegate {
+import com.videaps.mindstorms.ral.BrickBase;
 
-	private FixedValue port;
 
+public class SensorBase extends BrickBase {
+
+	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		String portValue = ""+port.getValue(execution);
+		super.execute(execution);
+	}
 
-		System.out.println("port="+portValue);
+	
+	@Override
+	public String toString() {
+		return super.toString() + " SensorBase []";
 	}
 
 }

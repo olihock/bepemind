@@ -22,48 +22,40 @@ import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.impl.el.JuelExpression;
 
 public class RotateBase extends MotorBase {
-
 	private JuelExpression angle;
 	private JuelExpression immediateReturn;
 
+	private Long angleValue = 0L;
+	private Boolean immediateReturnValue = Boolean.FALSE;
+	
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		super.execute(execution);
-		
-		System.out.println(execution.getCurrentActivityName());
-		
-		Long angleValue = readAngle(execution);
-		Boolean immediateReturnValue = readImmediateReturn(execution);
-		
-		System.out.println("angle="+angleValue);
-		System.out.println("immediateReturn="+immediateReturnValue);
-	}
 
-	
-	private Long readAngle(DelegateExecution execution) {
-		Object angleObject = angle.getValue(execution);
-		Long angleValue = 0L;
-		if(angleObject != null) {
+		if(angle != null) {
+			Object angleObject = angle.getValue(execution);
 			if(angleObject instanceof Number) {
 				angleValue = ((Number)angleObject).longValue();
 			} else {
 				angleValue = (Long) angleObject;
 			}
 		}
-		return angleValue;
-	}
-	
-	private Boolean readImmediateReturn(DelegateExecution execution) {
-		Boolean immediateReturnValue = Boolean.FALSE;
+
 		if(immediateReturn != null) {
 			Object immediateReturnObject = immediateReturn.getValue(execution);
 			if(immediateReturnObject != null) {
 				immediateReturnValue = (Boolean) immediateReturnObject;
 			}
 		}
-		return immediateReturnValue;
+		
+		System.out.println(toString());
 	}
 
+	
+	@Override
+	public String toString() {
+		return super.toString() + " RotateBase [angleValue=" + angleValue + ", immediateReturnValue=" + immediateReturnValue + "]";
+	}
 
 }

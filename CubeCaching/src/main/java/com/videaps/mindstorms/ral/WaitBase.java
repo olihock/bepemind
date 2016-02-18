@@ -26,6 +26,14 @@ public class WaitBase implements JavaDelegate {
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		Thread.sleep(1000);
+		
+		System.out.println(toString());
+	}
+
+	
+	@Override
+	public String toString() {
+		return "WaitBase []";
 	}
 
 }

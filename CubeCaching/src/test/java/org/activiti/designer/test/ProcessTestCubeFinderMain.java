@@ -21,12 +21,18 @@ public class ProcessTestCubeFinderMain {
 
 	private String mainFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\CubeFinderMain.bpmn";
 	private String searchFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Search.bpmn";
-	private String walkFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Walk.bpmn";
-	private String turnFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Turn.bpmn";
+
 	private String walkRightAndDownFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\WalkRightAndUp.bpmn";
 	private String walkRightAndUpFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\WalkRightAndDown.bpmn";
+
+	private String walkAndScanFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\WalkAndScan.bpmn";
+	
+	private String walkFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Walk.bpmn";
 	private String scanFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Scan.bpmn";
 
+	private String turnFileName = "C:\\Users\\Oliver\\Development\\github\\bepemind\\CubeCaching\\src\\main\\resources\\diagrams\\cubefinder\\Turn.bpmn";
+
+	
 	@Rule
 	public ActivitiRule activitiRule = new ActivitiRule();
 
@@ -43,6 +49,7 @@ public class ProcessTestCubeFinderMain {
 				.addInputStream("walkRightAndDown.bpmn20.xml", new FileInputStream(walkRightAndDownFileName))
 				.addInputStream("walkRightAndUp.bpmn20.xml", new FileInputStream(walkRightAndUpFileName))
 				.addInputStream("scan.bpmn20.xml", new FileInputStream(scanFileName))
+				.addInputStream("walkAndScan.bpmn20.xml", new FileInputStream(walkAndScanFileName))
 			.deploy();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace(System.err);

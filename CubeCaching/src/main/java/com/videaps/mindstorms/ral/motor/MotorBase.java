@@ -19,31 +19,35 @@
 package com.videaps.mindstorms.ral.motor;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.impl.el.FixedValue;
 import org.activiti.engine.impl.el.JuelExpression;
 
+import com.videaps.mindstorms.ral.BrickBase;
 
-public class MotorBase implements JavaDelegate {
 
-	protected FixedValue port; // One out of A, B, C, D
-	protected JuelExpression acceleration;
+public class MotorBase extends BrickBase {
+	private JuelExpression acceleration;
 
+	private Long accelerationValue = 0L;
+	
+	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		if(port == null) {
-			throw new IllegalArgumentException("port shall be defined");
-		}
-		String portValue = (String) port.getValue(execution);
+		super.execute(execution);
 
-		Long accelerationValue = null;
 		if(acceleration != null) {
 			accelerationValue = (Long) acceleration.getValue(execution);
 		}
+	}
+	
+	
+	@Override
+	public String toString() {
+		return super.toString() + " MotorBase [accelerationValue=" + accelerationValue + "]";
+	}
 
-		System.out.println("port="+portValue);
-		System.out.println("acceleration="+accelerationValue);
 
+	public Long getAccelerationValue() {
+		return accelerationValue;
 	}
 
 }

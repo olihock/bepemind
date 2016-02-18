@@ -25,9 +25,14 @@ public class FetchSampleBase extends SensorBase {
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		super.execute(execution);
+		
+		System.out.println(toString());
+	}
 
-		System.out.println(execution.getCurrentActivityName());
-
+	
+	@Override
+	public String toString() {
+		return super.toString() + " FetchSampleBase []";
 	}
 
 }
