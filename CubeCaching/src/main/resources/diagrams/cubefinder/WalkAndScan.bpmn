@@ -9,9 +9,11 @@
       </extensionElements>
     </callActivity>
     <callActivity id="scan" name="Scan" calledElement="scan"></callActivity>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="walkForward"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="log"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="walkForward" targetRef="scan"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="scan" targetRef="endevent1"></sequenceFlow>
+    <serviceTask id="log" name="Log" activiti:class="com.videaps.cubefinder.WalkAndScanLogger"></serviceTask>
+    <sequenceFlow id="flow4" sourceRef="log" targetRef="walkForward"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walkAndScan">
     <bpmndi:BPMNPlane bpmnElement="walkAndScan" id="BPMNPlane_walkAndScan">
@@ -19,25 +21,32 @@
         <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
-        <omgdc:Bounds height="35.0" width="35.0" x="610.0" y="210.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="935.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkForward" id="BPMNShape_walkForward">
-        <omgdc:Bounds height="55.0" width="105.0" x="180.0" y="200.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="505.0" y="200.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="scan" id="BPMNShape_scan">
-        <omgdc:Bounds height="55.0" width="105.0" x="400.0" y="200.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="725.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="log" id="BPMNShape_log">
+        <omgdc:Bounds height="55.0" width="105.0" x="190.0" y="200.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="85.0" y="227.0"></omgdi:waypoint>
-        <omgdi:waypoint x="180.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="190.0" y="227.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
-        <omgdi:waypoint x="285.0" y="227.0"></omgdi:waypoint>
-        <omgdi:waypoint x="400.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="725.0" y="227.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="830.0" y="227.0"></omgdi:waypoint>
+        <omgdi:waypoint x="935.0" y="227.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="295.0" y="227.0"></omgdi:waypoint>
         <omgdi:waypoint x="505.0" y="227.0"></omgdi:waypoint>
-        <omgdi:waypoint x="610.0" y="227.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

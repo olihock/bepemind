@@ -29,7 +29,6 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <sequenceFlow id="flow1" sourceRef="start" targetRef="parallelgateway1"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="parallelgateway2" targetRef="waitForCompletion"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
@@ -39,6 +38,7 @@
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="rotateRightMotor"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="rotateRightMotor" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow8" sourceRef="rotateLeftMotor" targetRef="parallelgateway2"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="start" targetRef="parallelgateway1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walk">
     <bpmndi:BPMNPlane bpmnElement="walk" id="BPMNPlane_walk">
@@ -63,10 +63,6 @@
       <bpmndi:BPMNShape bpmnElement="waitForCompletion" id="BPMNShape_waitForCompletion">
         <omgdc:Bounds height="55.0" width="105.0" x="586.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="85.0" y="207.0"></omgdi:waypoint>
-        <omgdi:waypoint x="140.0" y="207.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
         <omgdi:waypoint x="490.0" y="207.0"></omgdi:waypoint>
         <omgdi:waypoint x="586.0" y="207.0"></omgdi:waypoint>
@@ -94,6 +90,10 @@
         <omgdi:waypoint x="365.0" y="127.0"></omgdi:waypoint>
         <omgdi:waypoint x="470.0" y="127.0"></omgdi:waypoint>
         <omgdi:waypoint x="470.0" y="187.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
+        <omgdi:waypoint x="85.0" y="207.0"></omgdi:waypoint>
+        <omgdi:waypoint x="140.0" y="207.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

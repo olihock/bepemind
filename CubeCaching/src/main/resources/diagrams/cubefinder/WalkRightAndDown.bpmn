@@ -23,8 +23,12 @@
     <sequenceFlow id="flow3" sourceRef="walkRight" targetRef="turnRight2ndTime"></sequenceFlow>
     <callActivity id="walkDownAndScan" name="Walk Down And Scan" calledElement="walkAndScan">
       <extensionElements>
-        <activiti:in sourceExpression="${ ( 10 / 10 ) * 360 }" target="distance"></activiti:in>
+        <activiti:in sourceExpression="${ 10 }" target="distance"></activiti:in>
+        <activiti:in sourceExpression="${loopCounter}" target="index"></activiti:in>
       </extensionElements>
+      <multiInstanceLoopCharacteristics isSequential="true">
+        <loopCardinality>${ yLength / 10 }</loopCardinality>
+      </multiInstanceLoopCharacteristics>
     </callActivity>
     <sequenceFlow id="flow4" sourceRef="turnRight2ndTime" targetRef="walkDownAndScan"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="walkDownAndScan" targetRef="endevent2"></sequenceFlow>
