@@ -16,30 +16,25 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.sandbox;
+package com.videaps.mindstorms.ral;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.impl.el.FixedValue;
+
+import com.videaps.mindstorms.ev3.Brick;
 
 
-public class WalkingService implements JavaDelegate {
+/**
+ * A kind of dummy class to just wait for all motors to complete their movements,
+ * including a stalled motor situation.
+ */
+public class WaitDelegate extends WaitBase {
 
-	private FixedValue direction;
-	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
+		super.execute(execution);
 		
-		Integer index = execution.getVariable("index", Integer.class);
-		System.out.println("index="+index);
-		
-		String directionValue = (String) direction.getValue(execution);
-		
-		Integer distance = execution.getVariable("distance", Integer.class);
-		
-		System.out.println("Walking "+directionValue+" for "+distance+" cm.");
-		
-		Thread.sleep(Math.max(distance*10, 5));
+		Brick.getInstance().getRegulatedMotor("B").waitComplete();
+		Brick.getInstance().getRegulatedMotor("C").waitComplete();
 	}
 
 }

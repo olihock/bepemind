@@ -25,8 +25,8 @@ public class RotateBase extends MotorBase {
 	private JuelExpression angle;
 	private JuelExpression immediateReturn;
 
-	private Long angleValue = 0L;
-	private Boolean immediateReturnValue = Boolean.FALSE;
+	protected Long angleValue = 0L;
+	protected Boolean immediateReturnValue = Boolean.FALSE;
 	
 	
 	@Override

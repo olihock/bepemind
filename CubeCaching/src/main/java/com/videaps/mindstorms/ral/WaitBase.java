@@ -21,11 +21,11 @@ package com.videaps.mindstorms.ral;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
+
 public class WaitBase implements JavaDelegate {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		Thread.sleep(1000);
 		
 		System.out.println(toString());
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/Scan">
   <process id="scan" name="Scan" isExecutable="true">
-    <serviceTask id="turnLeft" name="Turn Left" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
+    <serviceTask id="turnLeft" name="Turn Left" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
           <activiti:expression><![CDATA[${45}]]></activiti:expression>
@@ -11,14 +11,14 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="scanLeftSide" name="Scan Left Side" activiti:class="com.videaps.mindstorms.ral.sensor.FetchSampleBase">
+    <serviceTask id="scanLeftSide" name="Scan Left Side" activiti:class="com.videaps.mindstorms.ral.sensor.FetchSampleDelegate">
       <extensionElements>
         <activiti:field name="port">
           <activiti:string><![CDATA[S1]]></activiti:string>
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="turnBackFromLeft" name="Turn Back From Left" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
+    <serviceTask id="turnBackFromLeft" name="Turn Back From Left" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
           <activiti:expression><![CDATA[${-45}]]></activiti:expression>
@@ -28,7 +28,7 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="turnRight" name="Turn Right" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
+    <serviceTask id="turnRight" name="Turn Right" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
           <activiti:expression><![CDATA[${45}]]></activiti:expression>
@@ -38,14 +38,14 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="scanRightSide" name="Scan Right Side" activiti:class="com.videaps.mindstorms.ral.sensor.FetchSampleBase">
+    <serviceTask id="scanRightSide" name="Scan Right Side" activiti:class="com.videaps.mindstorms.ral.sensor.FetchSampleDelegate">
       <extensionElements>
         <activiti:field name="port">
           <activiti:string><![CDATA[S1]]></activiti:string>
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="turnBackFromRight" name="Turn Back From Right" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
+    <serviceTask id="turnBackFromRight" name="Turn Back From Right" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
           <activiti:expression><![CDATA[${-45}]]></activiti:expression>

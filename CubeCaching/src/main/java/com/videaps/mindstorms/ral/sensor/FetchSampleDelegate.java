@@ -16,48 +16,32 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.math;
+package com.videaps.mindstorms.ral.sensor;
 
-import static org.junit.Assert.*;
+import org.activiti.engine.delegate.DelegateExecution;
 
-import org.junit.Test;
+import com.videaps.mindstorms.ev3.Brick;
 
-public class ModuloTest {
+import lejos.remote.ev3.RMISampleProvider;
 
-	@Test
-	public void modulo() {
-		int modulo = 3 % 2;
-		assertEquals(1, modulo);
-	}
+
+public class FetchSampleDelegate extends FetchSampleBase {
+
+	private float currentDistance = 0.0f;
 	
-	@Test 
-	public void calculate() {
-		int x = 70, d = 20;
-		int t = x / d;
-		System.out.println("t="+t);
-		int m = x % d;
-		System.out.println("m="+m);
-		int n = t + m;
-		assertEquals(3, n);
-		System.out.println("n="+n);
-	}
-	@Test
-	public void roundPlusModulo() {
-		int n = calculateIterationCount(9, 2);
-		assertEquals(5, n);
+	
+	@Override
+	public void execute(DelegateExecution execution) throws Exception {
+		super.execute(execution);
+		
+		RMISampleProvider sampleProvider = Brick.getInstance().getSampleProvider(getPortValue());
+		currentDistance = sampleProvider.fetchSample()[0];
 	}
 
-	@Test
-	public void calculateSearchAreaIterationCount() {
-		int n = calculateIterationCount(60, 20);
-		assertEquals(3, n);
-	}
-
-	private int calculateIterationCount(int x, int d) {
-		int r = Math.floorDiv(x, d);
-		int m = x % d;
-		int n = r + m;
-		return n;
+	
+	@Override
+	public String toString() {
+		return "FetchSampleDelegate [currentDistance=" + currentDistance + "]";
 	}
 
 }

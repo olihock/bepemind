@@ -16,22 +16,29 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.mindstorms.ev3;
+package com.videaps.cubefinder;
 
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
+import com.videaps.mindstorms.ev3.Brick;
+
 
 /**
- * A kind of dummy class to just wait for all motors to complete their movements,
- * including a stalled motor situation.
+ * Initializer to set up all ports of the Cube Finder, which is port A, B, C for motors 
+ * and S1 for sensor. 
+ * 
+ * @author Oliver
  */
-public class WaitDelegate implements JavaDelegate {
-
+public class InitialiseDelegate implements JavaDelegate {
+	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		Brick.getInstance().getRegulatedMotor("B").waitComplete();
-		Brick.getInstance().getRegulatedMotor("C").waitComplete();
+		String hostVariable = ""+execution.getVariable("Host");
+		
+		System.out.println("host="+hostVariable);
+		
+		Brick.intitialise(hostVariable, 'M', 'L', 'L');
 	}
 
 }

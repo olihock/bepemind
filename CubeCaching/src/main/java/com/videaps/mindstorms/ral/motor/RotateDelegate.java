@@ -19,21 +19,20 @@
 package com.videaps.mindstorms.ral.motor;
 
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.impl.el.FixedValue;
-import org.activiti.engine.impl.el.JuelExpression;
 
 import com.videaps.mindstorms.ev3.Brick;
 
 import lejos.remote.ev3.RMIRegulatedMotor;
 
+
 public class RotateDelegate extends RotateBase {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-
-//		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(motorPortValue);
-//		motor.rotate(angleValue.intValue(), immediateReturnValue);
+		super.execute(execution);
+		
+		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(getPortValue());
+		motor.rotate(angleValue.intValue(), immediateReturnValue);
 	}
 	
 }

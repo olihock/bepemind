@@ -21,15 +21,18 @@ package com.videaps.cubefinder;
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
+import com.videaps.mindstorms.ev3.Brick;
+
 
 /**
  *
  */
-public class CleanBase implements JavaDelegate {
+public class CleanDelegate implements JavaDelegate {
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		// TODO Oliver Implement clean execution
+		Brick.getInstance().closeMotors();
+		Brick.getInstance().closeSensors();
 	}
 
 }

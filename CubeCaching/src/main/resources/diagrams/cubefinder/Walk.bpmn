@@ -3,7 +3,7 @@
   <process id="walk" name="Walk" isExecutable="true">
     <startEvent id="start" name="Start"></startEvent>
     <endEvent id="end" name="End"></endEvent>
-    <serviceTask id="rotateLeftMotor" name="Rotate Left Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
+    <serviceTask id="rotateLeftMotor" name="Rotate Left Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="immediateReturn">
           <activiti:expression><![CDATA[${true}]]></activiti:expression>
@@ -16,7 +16,7 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="rotateRightMotor" name="Rotate Right Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateBase">
+    <serviceTask id="rotateRightMotor" name="Rotate Right Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="immediateReturn">
           <activiti:expression><![CDATA[${true}]]></activiti:expression>
@@ -32,7 +32,7 @@
     <sequenceFlow id="flow3" sourceRef="parallelgateway2" targetRef="waitForCompletion"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
-    <serviceTask id="waitForCompletion" name="Wait For Completion" activiti:class="com.videaps.mindstorms.ral.WaitBase"></serviceTask>
+    <serviceTask id="waitForCompletion" name="Wait For Completion" activiti:class="com.videaps.mindstorms.ral.WaitDelegate"></serviceTask>
     <sequenceFlow id="flow4" sourceRef="waitForCompletion" targetRef="end"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rotateLeftMotor"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="rotateRightMotor"></sequenceFlow>
