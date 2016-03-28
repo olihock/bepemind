@@ -2,7 +2,7 @@
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/CubeFinderMain">
   <process id="cubeFinderMain" name="Cube Finder Main" isExecutable="true">
     <serviceTask id="initialise" name="Initialise" activiti:class="com.videaps.cubefinder.InitialiseDelegate"></serviceTask>
-    <serviceTask id="clean" name="Clean" activiti:class="com.videaps.cubefinder.CleanDelegate"></serviceTask>
+    <serviceTask id="clean" name="Clean" activiti:class="com.videaps.cubefinder.CleanUpDelegate"></serviceTask>
     <startEvent id="start" name="Start"></startEvent>
     <endEvent id="end" name="End"></endEvent>
     <sequenceFlow id="flow1" sourceRef="start" targetRef="initialise"></sequenceFlow>
@@ -18,17 +18,11 @@
         <loopCardinality>${ ( xLength / xFraction ) }</loopCardinality>
       </multiInstanceLoopCharacteristics>
     </callActivity>
-    <sequenceFlow id="flow3" sourceRef="initialise" targetRef="walkUp"></sequenceFlow>
     <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="clean"></sequenceFlow>
-    <callActivity id="walkUp" name="Walk Up" calledElement="walk">
-      <extensionElements>
-        <activiti:in source="yLength" target="distance"></activiti:in>
-      </extensionElements>
-    </callActivity>
-    <sequenceFlow id="flow5" sourceRef="walkUp" targetRef="searchForCube"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="initialise" targetRef="searchForCube"></sequenceFlow>
     <dataObject id="host" name="Host" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>192.168.173.67</activiti:value>
+        <activiti:value>192.168.173.29</activiti:value>
       </extensionElements>
     </dataObject>
     <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:long">
@@ -38,7 +32,7 @@
     </dataObject>
     <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:long">
       <extensionElements>
-        <activiti:value>100</activiti:value>
+        <activiti:value>60</activiti:value>
       </extensionElements>
     </dataObject>
     <dataObject id="xFraction" name="xFraction" itemSubjectRef="xsd:long">
@@ -62,10 +56,7 @@
         <omgdc:Bounds height="35.0" width="35.0" x="790.0" y="150.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="searchForCube" id="BPMNShape_searchForCube">
-        <omgdc:Bounds height="55.0" width="105.0" x="440.0" y="140.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="walkUp" id="BPMNShape_walkUp">
-        <omgdc:Bounds height="55.0" width="105.0" x="270.0" y="140.0"></omgdc:Bounds>
+        <omgdc:Bounds height="55.0" width="105.0" x="370.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="65.0" y="167.0"></omgdi:waypoint>
@@ -75,17 +66,13 @@
         <omgdi:waypoint x="725.0" y="167.0"></omgdi:waypoint>
         <omgdi:waypoint x="790.0" y="167.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="215.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="270.0" y="167.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="545.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="475.0" y="167.0"></omgdi:waypoint>
         <omgdi:waypoint x="620.0" y="167.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="375.0" y="167.0"></omgdi:waypoint>
-        <omgdi:waypoint x="440.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="215.0" y="167.0"></omgdi:waypoint>
+        <omgdi:waypoint x="370.0" y="167.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

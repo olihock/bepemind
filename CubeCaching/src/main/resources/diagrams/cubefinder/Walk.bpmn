@@ -29,11 +29,11 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <sequenceFlow id="flow3" sourceRef="parallelgateway2" targetRef="waitForCompletion"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="parallelgateway2" targetRef="waitForMotors"></sequenceFlow>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
-    <serviceTask id="waitForCompletion" name="Wait For Completion" activiti:class="com.videaps.mindstorms.ral.WaitDelegate"></serviceTask>
-    <sequenceFlow id="flow4" sourceRef="waitForCompletion" targetRef="end"></sequenceFlow>
+    <serviceTask id="waitForMotors" name="Wait For Motors" activiti:class="com.videaps.mindstorms.ral.WaitDelegate"></serviceTask>
+    <sequenceFlow id="flow4" sourceRef="waitForMotors" targetRef="end"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rotateLeftMotor"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="rotateRightMotor"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="rotateRightMotor" targetRef="parallelgateway2"></sequenceFlow>
@@ -60,7 +60,7 @@
       <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
         <omgdc:Bounds height="40.0" width="40.0" x="450.0" y="187.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="waitForCompletion" id="BPMNShape_waitForCompletion">
+      <bpmndi:BPMNShape bpmnElement="waitForMotors" id="BPMNShape_waitForMotors">
         <omgdc:Bounds height="55.0" width="105.0" x="586.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">

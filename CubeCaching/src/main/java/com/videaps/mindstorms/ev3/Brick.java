@@ -23,6 +23,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import lejos.remote.ev3.RMIRegulatedMotor;
 import lejos.remote.ev3.RMISampleProvider;
@@ -34,18 +35,19 @@ import lejos.remote.ev3.RemoteEV3;
  * Motor and sensor ports can be created by it.
  */
 public class Brick extends RemoteEV3 {
+	private static final Logger LOGGER = Logger.getLogger(Brick.class.getName());
+
 	private static Brick instance = null;
 	
 	private Map<String, RMIRegulatedMotor> motorMap = new HashMap<String, RMIRegulatedMotor>();
 	private Map<String, RMISampleProvider> sensorMap = new HashMap<String, RMISampleProvider>();
 	
 	
-	private Brick(
-			String host, 
+	private Brick(String host, 
 			char motorAType, 
 			char motorBType, 
 			char motorCType
-		) throws RemoteException, MalformedURLException, NotBoundException {
+	) throws RemoteException, MalformedURLException, NotBoundException {
 		super(host);
 		motorMap.put("A", super.createRegulatedMotor("A", motorAType));
 		motorMap.put("B", super.createRegulatedMotor("B", motorBType));
@@ -96,6 +98,22 @@ public class Brick extends RemoteEV3 {
 	public RMISampleProvider getSampleProvider(String portName) {
 		RMISampleProvider sensor = sensorMap.get(portName);
 		return sensor;
+	}
+
+	
+	/**
+	 * A kind of dummy class to just wait for all motors to complete their movements,
+	 * including a stalled motor situation.
+	 */
+	public void waitForMotors(String... motorPorts) throws RemoteException {
+		for(String motorPort : motorPorts) {
+			LOGGER.info("motorPort="+motorPort);
+			RMIRegulatedMotor motor = getRegulatedMotor(motorPort);
+			if(motor != null) {
+				LOGGER.info("motor="+motor);
+				motor.waitComplete();
+			}
+		}
 	}
 
 }

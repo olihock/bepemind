@@ -18,6 +18,8 @@
 */
 package com.videaps.cubefinder;
 
+import java.util.logging.Logger;
+
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
@@ -31,12 +33,13 @@ import com.videaps.mindstorms.ev3.Brick;
  * @author Oliver
  */
 public class InitialiseDelegate implements JavaDelegate {
+	private static final Logger LOGGER = Logger.getLogger(InitialiseDelegate.class.getName());
 	
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		String hostVariable = ""+execution.getVariable("Host");
 		
-		System.out.println("host="+hostVariable);
+		LOGGER.info("host="+hostVariable);
 		
 		Brick.intitialise(hostVariable, 'M', 'L', 'L');
 	}

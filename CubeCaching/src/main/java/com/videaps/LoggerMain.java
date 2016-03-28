@@ -16,45 +16,23 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.mindstorms.ev3;
+package com.videaps;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-/**
- * 
- * @author Oliver
- *
- * @param <K> Motor Port
- * @param <V> Motor Type
- */
-public class MotorInfo<K, V> {
-	private K port;
-	private V type;
-
-	public MotorInfo(K port, V type) {
-		this.port = port;
-		this.type = type;
+public class LoggerMain {
+	private final static Logger LOGGER = Logger.getLogger(LoggerMain.class.getName());
+	public static void main(String[] args) {
+		LOGGER.setLevel(Level.FINER);
+		
+	    LOGGER.severe("severe");
+	    LOGGER.warning("warning");
+	    LOGGER.info("info");
+	    LOGGER.config("config");
+	    LOGGER.fine("fine");
+	    LOGGER.finer("finer");
+	    LOGGER.finest("finest");
 	}
 
-	
-	@Override
-	public String toString() {
-		return port + "-" + type;
-	}
-
-	public K getPort() {
-		return this.port;
-	}
-
-	public V getType() {
-		return this.type;
-	}
-
-	public K setPort(K port) {
-		return this.port = port;
-	}
-
-	public V setType(V type) {
-		return this.type = type;
-	}
-	
 }

@@ -18,21 +18,81 @@
 */
 package com.videaps.mindstorms.ral.motor;
 
+import java.util.logging.Logger;
+
 import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.impl.el.JuelExpression;
 
 import com.videaps.mindstorms.ev3.Brick;
+import com.videaps.mindstorms.ral.PortDelegate;
 
 import lejos.remote.ev3.RMIRegulatedMotor;
 
 
-public class RotateDelegate extends RotateBase {
+public class RotateDelegate extends PortDelegate {
+	private static final Logger LOGGER = Logger.getLogger(RotateDelegate.class.getName());
+
+	private JuelExpression acceleration;
+	private JuelExpression angle;
+	private JuelExpression immediateReturn;
+
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		super.execute(execution);
+		LOGGER.info(toString());
+		
+		int accelerationValue = mapAcceleration(execution);
+		int angleValue = mapAngle(execution);
+		boolean immediateReturnValue = mapImmediateReturn(execution);
 		
 		RMIRegulatedMotor motor = Brick.getInstance().getRegulatedMotor(getPortValue());
-		motor.rotate(angleValue.intValue(), immediateReturnValue);
+		motor.setAcceleration(accelerationValue);
+		motor.rotate(angleValue, immediateReturnValue);
+	}
+
+
+	private boolean mapImmediateReturn(DelegateExecution execution) {
+		Boolean immediateReturnValue = Boolean.FALSE;
+		if(immediateReturn != null) {
+			Object immediateReturnObject = immediateReturn.getValue(execution);
+			if(immediateReturnObject != null) {
+				immediateReturnValue = (Boolean) immediateReturnObject;
+			}
+		}
+		return immediateReturnValue;
+	}
+
+
+	private int mapAngle(DelegateExecution execution) {
+		Long angleValue = 0L;
+		if(angle != null) {
+			Object angleObject = angle.getValue(execution);
+			if(angleObject instanceof Number) {
+				angleValue = ((Number)angleObject).longValue();
+			} else {
+				angleValue = (Long) angleObject;
+			}
+		}
+		return angleValue.intValue();
+	}
+
+
+	private int mapAcceleration(DelegateExecution execution) {
+		int accelerationValue = Integer.MAX_VALUE;
+		if(acceleration != null) {
+			accelerationValue = ((Long) acceleration.getValue(execution)).intValue();
+		}
+		return accelerationValue;
 	}
 	
+
+	@Override
+	public String toString() {
+		return "RotateDelegate [acceleration=" + acceleration + ", angle=" + angle + ", immediateReturn="
+				+ immediateReturn + "]";
+	}
+
 }
+
+

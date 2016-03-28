@@ -18,14 +18,18 @@
 */
 package com.videaps.mindstorms.ral.sensor;
 
+import java.util.logging.Logger;
+
 import org.activiti.engine.delegate.DelegateExecution;
 
 import com.videaps.mindstorms.ev3.Brick;
+import com.videaps.mindstorms.ral.PortDelegate;
 
 import lejos.remote.ev3.RMISampleProvider;
 
 
-public class FetchSampleDelegate extends FetchSampleBase {
+public class FetchSampleDelegate extends PortDelegate {
+	private static final Logger LOGGER = Logger.getLogger(FetchSampleDelegate.class.getName());
 
 	private float currentDistance = 0.0f;
 	
@@ -36,6 +40,8 @@ public class FetchSampleDelegate extends FetchSampleBase {
 		
 		RMISampleProvider sampleProvider = Brick.getInstance().getSampleProvider(getPortValue());
 		currentDistance = sampleProvider.fetchSample()[0];
+		
+		LOGGER.info(toString());
 	}
 
 	

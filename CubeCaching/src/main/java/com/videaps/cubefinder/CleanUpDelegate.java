@@ -18,26 +18,26 @@
 */
 package com.videaps.cubefinder;
 
+import java.util.logging.Logger;
+
 import org.activiti.engine.delegate.DelegateExecution;
 import org.activiti.engine.delegate.JavaDelegate;
 
-public class WalkAndScanLogger implements JavaDelegate {
-	private Integer index; 
-	private Number distance;
-	
-	
+import com.videaps.mindstorms.ev3.Brick;
+
+
+/**
+ *
+ */
+public class CleanUpDelegate implements JavaDelegate {
+	private static final Logger LOGGER = Logger.getLogger(CleanUpDelegate.class.getName());
+
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		index = execution.getVariable("index", Integer.class);
-		distance = execution.getVariable("distance", Number.class);
+		Brick.getInstance().closeMotors();
+		Brick.getInstance().closeSensors();
 		
-		System.out.println(toString());
-	}
-
-
-	@Override
-	public String toString() {
-		return "WalkAndScanLogger [index=" + index + ", distance=" + distance + "]";
+		LOGGER.info("All ports closed.");
 	}
 
 }

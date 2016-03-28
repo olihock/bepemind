@@ -18,23 +18,24 @@
 */
 package com.videaps.mindstorms.ral;
 
+import java.util.logging.Logger;
+
 import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.delegate.JavaDelegate;
 
 import com.videaps.mindstorms.ev3.Brick;
 
 
-/**
- * A kind of dummy class to just wait for all motors to complete their movements,
- * including a stalled motor situation.
- */
-public class WaitDelegate extends WaitBase {
+public class WaitDelegate implements JavaDelegate {
+	private static final Logger LOGGER = Logger.getLogger(WaitDelegate.class.getName());
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		super.execute(execution);
+		LOGGER.info("Wait for all motors to complete.");
 		
-		Brick.getInstance().getRegulatedMotor("B").waitComplete();
-		Brick.getInstance().getRegulatedMotor("C").waitComplete();
+		Brick.getInstance().waitForMotors("A", "B", "C", "D");
+		
+		LOGGER.info("Motors completed.");
 	}
 
 }

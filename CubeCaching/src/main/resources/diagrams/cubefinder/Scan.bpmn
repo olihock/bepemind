@@ -4,7 +4,7 @@
     <serviceTask id="turnLeft" name="Turn Left" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
-          <activiti:expression><![CDATA[${45}]]></activiti:expression>
+          <activiti:expression><![CDATA[${variation}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="port">
           <activiti:string><![CDATA[B]]></activiti:string>
@@ -21,7 +21,7 @@
     <serviceTask id="turnBackFromLeft" name="Turn Back From Left" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
-          <activiti:expression><![CDATA[${-45}]]></activiti:expression>
+          <activiti:expression><![CDATA[${-variation}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="port">
           <activiti:string><![CDATA[B]]></activiti:string>
@@ -31,7 +31,7 @@
     <serviceTask id="turnRight" name="Turn Right" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
-          <activiti:expression><![CDATA[${45}]]></activiti:expression>
+          <activiti:expression><![CDATA[${variation}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="port">
           <activiti:string><![CDATA[C]]></activiti:string>
@@ -48,7 +48,7 @@
     <serviceTask id="turnBackFromRight" name="Turn Back From Right" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="angle">
-          <activiti:expression><![CDATA[${-45}]]></activiti:expression>
+          <activiti:expression><![CDATA[${-variation}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="port">
           <activiti:string><![CDATA[C]]></activiti:string>

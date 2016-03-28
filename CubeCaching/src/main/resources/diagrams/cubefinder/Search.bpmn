@@ -18,10 +18,10 @@
       </extensionElements>
     </callActivity>
     <sequenceFlow id="up" name="Up" sourceRef="upOrDown" targetRef="walkRightAndUp">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 1}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 0}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="down" name="Down" sourceRef="upOrDown" targetRef="walkRightAndDown">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 0}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 1}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow16" sourceRef="walkRightAndDown" targetRef="end"></sequenceFlow>
     <sequenceFlow id="flow18" sourceRef="walkRightAndUp" targetRef="end"></sequenceFlow>
@@ -52,7 +52,7 @@
         <omgdi:waypoint x="310.0" y="280.0"></omgdi:waypoint>
         <omgdi:waypoint x="490.0" y="280.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="14.0" width="13.0" x="321.0" y="239.0"></omgdc:Bounds>
+          <omgdc:Bounds height="14.0" width="100.0" x="321.0" y="239.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="down" id="BPMNEdge_down">

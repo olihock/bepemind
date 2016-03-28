@@ -16,11 +16,36 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder;
+package com.videaps.mindstorms.ral;
 
-public interface Params {
+import java.util.logging.Logger;
 
-	/** Wheel circumference which is used to calculate the distance a wheel walks for one turn. */
-	public static final long CIRCUMFERENCE = 10L;
+import org.activiti.engine.delegate.DelegateExecution;
+import org.activiti.engine.delegate.JavaDelegate;
+import org.activiti.engine.impl.el.FixedValue;
 
+
+/**
+ * 
+ * @author Oliver
+ *
+ */
+public class PortDelegate implements JavaDelegate {
+	private static final Logger LOGGER = Logger.getLogger(PortDelegate.class.getName());
+
+	private FixedValue port;
+
+	private String portValue;
+
+	
+	@Override
+	public void execute(DelegateExecution execution) throws Exception {
+		LOGGER.info("port="+port);
+		portValue = (String) port.getValue(execution);
+	}
+
+	
+	protected String getPortValue() {
+		return portValue;
+	}
 }
