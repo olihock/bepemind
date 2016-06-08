@@ -32,32 +32,22 @@ import org.junit.Test;
 
 public class CubeFinderTest {
 
-	CubeFinder cubeFinder = null; 
-	
-	@Before
-	public void initialise() throws NotBoundException, IOException {
-		cubeFinder = new CubeFinder();
-	}
-	
-	@After
-	public void finalise() {
-		cubeFinder.closeDistanceMeter();
+	@Test
+	public void moveForward() throws NotBoundException, IOException {
+		CubeFinder cubeFinder = new CubeFinder(); 
+		cubeFinder.move(360);
+		
+		cubeFinder.shutdownPorts();
 	}
 	
 	
 	@Test
-	public void turnLeft() {
-		cubeFinder.turnLeft();
+	public void findSampleAndStop() throws NotBoundException, IOException {
+		CubeFinder cubeFinder = new CubeFinder(); 
+		cubeFinder.findSampleAndStop();
+	
+		cubeFinder.shutdownPorts();
 	}
 	
-	
-	@Test
-	public void measureDistance() throws RemoteException, MalformedURLException, NotBoundException {
-
-		float distance = cubeFinder.measureDistance();
-		assertNotSame(0.0, distance);
-		System.out.println("distance="+distance);
-	}
-
 	
 }

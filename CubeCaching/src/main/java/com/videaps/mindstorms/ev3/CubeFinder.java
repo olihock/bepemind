@@ -19,17 +19,17 @@
 package com.videaps.mindstorms.ev3;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.logging.Logger;
+
+import com.videaps.mindstorms.ral.motor.RotateDelegate;
 
 import lejos.hardware.BrickFinder;
-import lejos.remote.ev3.RemoteRequestEV3;
-import lejos.remote.ev3.RemoteRequestSampleProvider;
-import lejos.robotics.RegulatedMotor;
-import lejos.robotics.chassis.Chassis;
-import lejos.robotics.chassis.Wheel;
-import lejos.robotics.chassis.WheeledChassis;
-import lejos.robotics.navigation.MovePilot;
+import lejos.remote.ev3.RMIRegulatedMotor;
+import lejos.remote.ev3.RMISampleProvider;
+import lejos.remote.ev3.RemoteEV3;
 
 
 /**
@@ -37,39 +37,74 @@ import lejos.robotics.navigation.MovePilot;
  * Two motors for driving the cube finder, one to pick up the cube and one sensor to find the cube
  * by measuring the distance between cube and finder.
  */
-public class CubeFinder extends RemoteRequestEV3 {
-	private static final long serialVersionUID = 2486611391238302676L;
+public class CubeFinder extends RemoteEV3 {
+	private static final Logger LOGGER = Logger.getLogger(RotateDelegate.class.getName());
 
-	private MovePilot pilot = null;
-	private RemoteRequestSampleProvider distanceMeter = null;
+	RMIRegulatedMotor leftMotor = null;
+	RMIRegulatedMotor rightMotor = null;
+	RMISampleProvider distanceMeter = null;
 	
 	
 	public CubeFinder() throws NotBoundException, IOException {
-		super(BrickFinder.find("EV3")[0].getIPAddress()); // "192.168.173.203"
+		super(BrickFinder.find("EV3")[0].getIPAddress()); 
 		
-		Chassis chassis = initChassis();
-		pilot = new MovePilot(chassis);
-
-		distanceMeter = (RemoteRequestSampleProvider) createSampleProvider("S1", "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance");
+		leftMotor = createRegulatedMotor("A", 'L');
+		rightMotor = createRegulatedMotor("B", 'L');
+		
+		distanceMeter = createSampleProvider("S1", "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance");
 	}
 
 
-	private Chassis initChassis() {
-		RegulatedMotor leftMotor = createRegulatedMotor("A", 'L');
-		Wheel leftWheel = WheeledChassis.modelWheel(leftMotor, 25.0).offset(-70);
-		RegulatedMotor rightMotor = createRegulatedMotor("B", 'L');
-		Wheel rightWheel = WheeledChassis.modelWheel(rightMotor, 25.0).offset(70);
-		
-		Chassis chassis = new WheeledChassis(new Wheel[] { leftWheel, rightWheel }, WheeledChassis.TYPE_DIFFERENTIAL);
-		return chassis;
+	public void move(int angle) throws RemoteException, MalformedURLException, NotBoundException {
+		leftMotor.rotate(angle, true);
+		rightMotor.rotate(angle, true);
+	}
+	
+	
+	public void findSampleAndStop() throws RemoteException {
+		forward();
+		doWhileDistanceLessThan(0.25f);
+		stop();
 	}
 
+
+	private void stop() throws RemoteException {
+		leftMotor.stop(true);
+		rightMotor.stop(true);
+	}
+
+
+	private void forward() throws RemoteException {
+		leftMotor.forward();
+		rightMotor.forward();
+	}
+	
+	/**
+	 * Measures the distance to an object in front of the cube. 
+	 * 
+	 * @return Distance in meter
+	 * @throws RemoteException
+	 */
+	private float measureDistance() throws RemoteException {
+		float distance = distanceMeter.fetchSample()[0];
+		return distance;
+	}
+	
+	
+	private boolean doWhileDistanceLessThan(float meters) throws RemoteException {
+		float distance = measureDistance();
+		while(distance >= meters) {
+			distance = measureDistance();
+			LOGGER.info("distance="+distance);
+		}
+		return true;
+	}
+	
 	
 	/**
 	 * Turn left by 90 degrees.
 	 */
 	public void turnLeft() {
-		pilot.rotateLeft();
 	}
 	
 	
@@ -79,22 +114,17 @@ public class CubeFinder extends RemoteRequestEV3 {
 	public void turnRight() {
 	}
 	
-	
+
 	/**
-	 * Measures the distance to an object in front of the cube. 
+	 * Free the motor ports again.
 	 * 
-	 * @return Distance in meter
 	 * @throws RemoteException
 	 */
-	public float measureDistance() throws RemoteException {
-		float[] distance = new float[1];
-		distanceMeter.fetchSample(distance, 0);
-		return distance[0];
-	}
-	
-	
-	public void closeDistanceMeter() {
+	public void shutdownPorts() throws RemoteException {
+		leftMotor.close();
+		rightMotor.close();
 		distanceMeter.close();
+		LOGGER.info("shutdownPorts="+true);
 	}
 	
 }
