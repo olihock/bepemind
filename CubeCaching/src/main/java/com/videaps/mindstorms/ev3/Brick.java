@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import lejos.hardware.BrickFinder;
 import lejos.remote.ev3.RMIRegulatedMotor;
 import lejos.remote.ev3.RMISampleProvider;
 import lejos.remote.ev3.RemoteEV3;
@@ -43,51 +44,51 @@ public class Brick extends RemoteEV3 {
 	private Map<String, RMISampleProvider> sensorMap = new HashMap<String, RMISampleProvider>();
 	
 	
-	private Brick(String host, 
-			char motorAType, 
-			char motorBType, 
-			char motorCType
-	) throws RemoteException, MalformedURLException, NotBoundException {
-		super(host);
-		motorMap.put("A", super.createRegulatedMotor("A", motorAType));
-		motorMap.put("B", super.createRegulatedMotor("B", motorBType));
-		motorMap.put("C", super.createRegulatedMotor("C", motorCType));
-		// TODO Oliver Add motor D creation.
-		sensorMap.put("S1", super.createSampleProvider("S1", "lejos.hardware.sensor.EV3IRSensor", "Distance"));
-		// TODO Oliver Add sensor 2 creation.
-		// TODO Oliver Add sensor 3 creation.
+	private Brick() throws RemoteException, MalformedURLException, NotBoundException {
+		super(BrickFinder.find("EV3")[0].getIPAddress());
+		
+		motorMap.put("A", createRegulatedMotor("A", 'L'));
+		motorMap.put("B", createRegulatedMotor("B", 'L'));
+		motorMap.put("C", createRegulatedMotor("C", 'M'));
+		motorMap.put("D", createRegulatedMotor("D", 'M'));
+		
+		sensorMap.put("S1", createSampleProvider("S1", "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance"));
 	}
 	
-	public static Brick intitialise(
-			String host,
-			char motorAType,
-			char motorBType,
-			char motorCType
-		) throws RemoteException, MalformedURLException, NotBoundException {
-		if(instance == null) {
-			instance = new Brick(host, motorAType, motorBType, motorCType);
-		}
-		return instance;
-	}
 	
 	public static Brick getInstance() {
 		if(instance == null) {
-			throw new IllegalArgumentException("This Singleton needs to be initialised. Call getInstance(host, aType, bType, cType) first.");
+			try {
+				instance = new Brick();
+			} catch (RemoteException | MalformedURLException | NotBoundException e) {
+				e.printStackTrace();
+			}
 		}
 		return instance; 
 	}
 	
-	public void closeMotors() throws RemoteException {
-		for(RMIRegulatedMotor motor : motorMap.values()) {
-			motor.close();
+	
+	public void closeMotors() {
+		try {
+			for(RMIRegulatedMotor motor : motorMap.values()) {
+				motor.close();
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+
+	
+	public void closeSensors() {
+		try {
+			for(RMISampleProvider sensor : sensorMap.values()) {
+				sensor.close();
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
 		}
 	}
 	
-	public void closeSensors() throws RemoteException {
-		for(RMISampleProvider sensor : sensorMap.values()) {
-			sensor.close();
-		}
-	}
 	
 	public RMIRegulatedMotor getRegulatedMotor(String portName) {
 		RMIRegulatedMotor motor = motorMap.get(portName);

@@ -18,35 +18,18 @@
 */
 package com.videaps.mindstorms.ev3;
 
-import static org.junit.Assert.assertNotSame;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
+
+import com.videaps.mindstorms.models.CubeFinder;
 
 
 public class CubeFinderTest {
 
 	@Test
-	public void moveForward() throws NotBoundException, IOException {
-		CubeFinder cubeFinder = new CubeFinder(); 
-		cubeFinder.move(360);
-		
-		cubeFinder.shutdownPorts();
-	}
-	
-	
-	@Test
-	public void findSampleAndStop() throws NotBoundException, IOException {
-		CubeFinder cubeFinder = new CubeFinder(); 
-		cubeFinder.findSampleAndStop();
-	
-		cubeFinder.shutdownPorts();
+	public void run() {
+		CubeFinder cubeFinder = new CubeFinder();
+		cubeFinder.run();
+		cubeFinder.shutdown();
 	}
 	
 	

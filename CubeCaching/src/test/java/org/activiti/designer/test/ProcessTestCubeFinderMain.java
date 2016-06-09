@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.net.MalformedURLException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import org.activiti.engine.RepositoryService;
@@ -37,7 +39,7 @@ public class ProcessTestCubeFinderMain {
 	public ActivitiRule activitiRule = new ActivitiRule();
 
 	@Test
-	public void startProcess() throws RemoteException {
+	public void startProcess() throws RemoteException, MalformedURLException, NotBoundException {
 		RepositoryService repositoryService = activitiRule.getRepositoryService();
 
 		try {

@@ -16,26 +16,15 @@
  WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-package com.videaps.cubefinder;
-
-import java.util.logging.Logger;
-
-import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.JavaDelegate;
+package com.videaps.mindstorms.models;
 
 
 /**
- * Initializer to set up all ports of the Cube Finder, which is port A, B, C for motors 
- * and S1 for sensor. 
  * 
- * @author Oliver
  */
-public class InitialiseDelegate implements JavaDelegate {
-	private static final Logger LOGGER = Logger.getLogger(InitialiseDelegate.class.getName());
+public interface IModel {
 	
-	@Override
-	public void execute(DelegateExecution execution) throws Exception {
-		LOGGER.info("No initialising needed so far.");
-	}
-
+	public void run();
+	public void shutdown();
+	
 }
