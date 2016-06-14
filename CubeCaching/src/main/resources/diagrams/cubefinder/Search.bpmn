@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/Search">
   <process id="search" name="Search" isExecutable="true">
-    <startEvent id="start" name="Start"></startEvent>
-    <endEvent id="end" name="End"></endEvent>
+    <startEvent id="start" name="Start" activiti:initiator="startSearch" activiti:formKey="Start Search"></startEvent>
+    <endEvent id="endSearch" name="End Search"></endEvent>
     <sequenceFlow id="flow12" sourceRef="start" targetRef="upOrDown"></sequenceFlow>
     <callActivity id="walkRightAndDown" name="Walk Right And Down" calledElement="walkRightAndDown">
       <extensionElements>
@@ -18,20 +18,20 @@
       </extensionElements>
     </callActivity>
     <sequenceFlow id="up" name="Up" sourceRef="upOrDown" targetRef="walkRightAndUp">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 0}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="down" name="Down" sourceRef="upOrDown" targetRef="walkRightAndDown">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow16" sourceRef="walkRightAndDown" targetRef="end"></sequenceFlow>
-    <sequenceFlow id="flow18" sourceRef="walkRightAndUp" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="down" name="Down" sourceRef="upOrDown" targetRef="walkRightAndDown">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${index%2 == 0}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow16" sourceRef="walkRightAndDown" targetRef="endSearch"></sequenceFlow>
+    <sequenceFlow id="flow18" sourceRef="walkRightAndUp" targetRef="endSearch"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_search">
     <bpmndi:BPMNPlane bpmnElement="search" id="BPMNPlane_search">
       <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
         <omgdc:Bounds height="35.0" width="35.0" x="135.0" y="172.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+      <bpmndi:BPMNShape bpmnElement="endSearch" id="BPMNShape_endSearch">
         <omgdc:Bounds height="35.0" width="35.0" x="630.0" y="172.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkRightAndDown" id="BPMNShape_walkRightAndDown">

@@ -55,15 +55,15 @@
         </activiti:field>
       </extensionElements>
     </serviceTask>
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <endEvent id="endevent1" name="End"></endEvent>
-    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="turnLeft"></sequenceFlow>
+    <startEvent id="startScan" name="Start Scan"></startEvent>
+    <endEvent id="endScan" name="End Scan"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="startScan" targetRef="turnLeft"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="turnLeft" targetRef="scanLeftSide"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="scanLeftSide" targetRef="turnBackFromLeft"></sequenceFlow>
     <sequenceFlow id="flow4" sourceRef="turnBackFromLeft" targetRef="turnRight"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="turnRight" targetRef="scanRightSide"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="scanRightSide" targetRef="turnBackFromRight"></sequenceFlow>
-    <sequenceFlow id="flow7" sourceRef="turnBackFromRight" targetRef="endevent1"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="turnBackFromRight" targetRef="endScan"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_scan">
     <bpmndi:BPMNPlane bpmnElement="scan" id="BPMNPlane_scan">
@@ -85,10 +85,10 @@
       <bpmndi:BPMNShape bpmnElement="turnBackFromRight" id="BPMNShape_turnBackFromRight">
         <omgdc:Bounds height="55.0" width="105.0" x="586.0" y="320.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+      <bpmndi:BPMNShape bpmnElement="startScan" id="BPMNShape_startScan">
         <omgdc:Bounds height="35.0" width="35.0" x="130.0" y="230.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+      <bpmndi:BPMNShape bpmnElement="endScan" id="BPMNShape_endScan">
         <omgdc:Bounds height="35.0" width="35.0" x="780.0" y="230.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">

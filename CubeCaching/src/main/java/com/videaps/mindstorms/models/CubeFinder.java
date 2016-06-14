@@ -22,7 +22,6 @@ import java.rmi.RemoteException;
 import java.util.logging.Logger;
 
 import com.videaps.mindstorms.ev3.Brick;
-import com.videaps.mindstorms.ral.motor.RotateDelegate;
 
 import lejos.remote.ev3.RMIRegulatedMotor;
 import lejos.remote.ev3.RMISampleProvider;
@@ -34,7 +33,7 @@ import lejos.remote.ev3.RMISampleProvider;
  * by measuring the distance between cube and finder.
  */
 public class CubeFinder implements IModel {
-	private static final Logger LOGGER = Logger.getLogger(RotateDelegate.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(CubeFinder.class.getName());
 
 	private static final double CIRCUMFERENCE_CM = 3.8 * 3.14159; // circumference [cm] = diameter [cm] * pi
 	private static final int RIGHT_ANGLE_DEGREES = 495; 

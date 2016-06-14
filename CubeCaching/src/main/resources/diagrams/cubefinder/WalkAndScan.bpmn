@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/WalkAndScan">
   <process id="walkAndScan" name="Walk And Scan" isExecutable="true">
-    <startEvent id="startevent1" name="Start"></startEvent>
-    <endEvent id="endevent1" name="End"></endEvent>
+    <startEvent id="startWalkAndScan" name="Start Walk And Scan"></startEvent>
+    <endEvent id="endWalkAndScan" name="End Walk And Scan"></endEvent>
     <callActivity id="walkForward" name="Walk Forward" calledElement="walk">
       <extensionElements>
         <activiti:in source="distance" target="distance"></activiti:in>
@@ -14,15 +14,15 @@
       </extensionElements>
     </callActivity>
     <sequenceFlow id="flow2" sourceRef="walkForward" targetRef="scan"></sequenceFlow>
-    <sequenceFlow id="flow3" sourceRef="scan" targetRef="endevent1"></sequenceFlow>
-    <sequenceFlow id="flow4" sourceRef="startevent1" targetRef="walkForward"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="scan" targetRef="endWalkAndScan"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="startWalkAndScan" targetRef="walkForward"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walkAndScan">
     <bpmndi:BPMNPlane bpmnElement="walkAndScan" id="BPMNPlane_walkAndScan">
-      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+      <bpmndi:BPMNShape bpmnElement="startWalkAndScan" id="BPMNShape_startWalkAndScan">
         <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+      <bpmndi:BPMNShape bpmnElement="endWalkAndScan" id="BPMNShape_endWalkAndScan">
         <omgdc:Bounds height="35.0" width="35.0" x="935.0" y="210.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="walkForward" id="BPMNShape_walkForward">

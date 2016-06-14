@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/Turn">
   <process id="turn" name="Turn" isExecutable="true">
-    <startEvent id="start" name="Start"></startEvent>
-    <endEvent id="end" name="End"></endEvent>
+    <startEvent id="startTurn" name="Start Turn"></startEvent>
+    <endEvent id="endTurn" name="EndTurn"></endEvent>
     <serviceTask id="leftWheel" name="Left Wheel" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="port">
@@ -31,21 +31,21 @@
     </serviceTask>
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
-    <sequenceFlow id="flow1" sourceRef="start" targetRef="parallelgateway1"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="startTurn" targetRef="parallelgateway1"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="parallelgateway1" targetRef="leftWheel"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="parallelgateway1" targetRef="rightWheel"></sequenceFlow>
     <sequenceFlow id="flow4" sourceRef="leftWheel" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="rightWheel" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway2" targetRef="waitForMotors"></sequenceFlow>
     <serviceTask id="waitForMotors" name="Wait For Motors" activiti:class="com.videaps.mindstorms.ral.WaitDelegate"></serviceTask>
-    <sequenceFlow id="flow7" sourceRef="waitForMotors" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow7" sourceRef="waitForMotors" targetRef="endTurn"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_turn">
     <bpmndi:BPMNPlane bpmnElement="turn" id="BPMNPlane_turn">
-      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+      <bpmndi:BPMNShape bpmnElement="startTurn" id="BPMNShape_startTurn">
         <omgdc:Bounds height="35.0" width="35.0" x="120.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+      <bpmndi:BPMNShape bpmnElement="endTurn" id="BPMNShape_endTurn">
         <omgdc:Bounds height="35.0" width="35.0" x="710.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="leftWheel" id="BPMNShape_leftWheel">

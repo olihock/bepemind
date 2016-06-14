@@ -32,8 +32,9 @@ import lejos.remote.ev3.RemoteEV3;
 
 
 /**
- * This singleton class reflects the EV3 brick which needs to statically instantiated.
- * Motor and sensor ports can be created by it.
+ * This singleton class reflects the static EV3 brick which needs to be created for port access.
+ * There's 4 motor ports and 3 sensor ports. These ports are statically mapped by this class.
+ * Also, the IP address for remote access is ascertained and the remote API is initiated with it.
  */
 public class Brick extends RemoteEV3 {
 	private static final Logger LOGGER = Logger.getLogger(Brick.class.getName());
@@ -47,10 +48,10 @@ public class Brick extends RemoteEV3 {
 	private Brick() throws RemoteException, MalformedURLException, NotBoundException {
 		super(BrickFinder.find("EV3")[0].getIPAddress());
 		
-		motorMap.put("A", createRegulatedMotor("A", 'L'));
+		motorMap.put("A", createRegulatedMotor("A", 'M'));
 		motorMap.put("B", createRegulatedMotor("B", 'L'));
-		motorMap.put("C", createRegulatedMotor("C", 'M'));
-		motorMap.put("D", createRegulatedMotor("D", 'M'));
+		motorMap.put("C", createRegulatedMotor("C", 'L'));
+//		motorMap.put("D", createRegulatedMotor("D", 'M'));
 		
 		sensorMap.put("S1", createSampleProvider("S1", "lejos.hardware.sensor.EV3UltrasonicSensor", "Distance"));
 	}

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/WalkRightAndDown">
   <process id="walkRightAndDown" name="Walk Right And Down" isExecutable="true">
-    <startEvent id="startevent2" name="Start Event 2"></startEvent>
-    <endEvent id="endevent2" name="End Event 2"></endEvent>
+    <startEvent id="startWalkRightAndDown" name="Start Walk Right And Down" activiti:initiator="startWalkRightAndDown" activiti:formKey="Start Walk Right And Down"></startEvent>
+    <endEvent id="endWalkRightAndDown" name="End Walk Right And Down"></endEvent>
     <callActivity id="turnRight1stTime" name="Turn Right 1st Time" calledElement="turn">
       <extensionElements>
         <activiti:in sourceExpression="${-90}" target="degrees"></activiti:in>
@@ -18,7 +18,7 @@
         <activiti:in sourceExpression="${-90}" target="degrees"></activiti:in>
       </extensionElements>
     </callActivity>
-    <sequenceFlow id="flow1" sourceRef="startevent2" targetRef="turnRight1stTime"></sequenceFlow>
+    <sequenceFlow id="flow1" sourceRef="startWalkRightAndDown" targetRef="turnRight1stTime"></sequenceFlow>
     <sequenceFlow id="flow2" sourceRef="turnRight1stTime" targetRef="walkRight"></sequenceFlow>
     <sequenceFlow id="flow3" sourceRef="walkRight" targetRef="turnRight2ndTime"></sequenceFlow>
     <callActivity id="walkDownAndScan" name="Walk Down And Scan" calledElement="walkAndScan">
@@ -31,14 +31,14 @@
       </multiInstanceLoopCharacteristics>
     </callActivity>
     <sequenceFlow id="flow4" sourceRef="turnRight2ndTime" targetRef="walkDownAndScan"></sequenceFlow>
-    <sequenceFlow id="flow5" sourceRef="walkDownAndScan" targetRef="endevent2"></sequenceFlow>
+    <sequenceFlow id="flow5" sourceRef="walkDownAndScan" targetRef="endWalkRightAndDown"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walkRightAndDown">
     <bpmndi:BPMNPlane bpmnElement="walkRightAndDown" id="BPMNPlane_walkRightAndDown">
-      <bpmndi:BPMNShape bpmnElement="startevent2" id="BPMNShape_startevent2">
+      <bpmndi:BPMNShape bpmnElement="startWalkRightAndDown" id="BPMNShape_startWalkRightAndDown">
         <omgdc:Bounds height="35.0" width="35.0" x="46.0" y="70.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="endevent2" id="BPMNShape_endevent2">
+      <bpmndi:BPMNShape bpmnElement="endWalkRightAndDown" id="BPMNShape_endWalkRightAndDown">
         <omgdc:Bounds height="35.0" width="35.0" x="565.0" y="320.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="turnRight1stTime" id="BPMNShape_turnRight1stTime">

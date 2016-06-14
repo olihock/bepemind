@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.videaps.com/Walk">
   <process id="walk" name="Walk" isExecutable="true">
-    <startEvent id="start" name="Start"></startEvent>
-    <endEvent id="end" name="End"></endEvent>
+    <startEvent id="startWalk" name="Start Walk"></startEvent>
+    <endEvent id="endWalk" name="End Walk"></endEvent>
     <serviceTask id="rotateLeftMotor" name="Rotate Left Motor" activiti:class="com.videaps.mindstorms.ral.motor.RotateDelegate">
       <extensionElements>
         <activiti:field name="immediateReturn">
@@ -33,19 +33,19 @@
     <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
     <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
     <serviceTask id="waitForMotors" name="Wait For Motors" activiti:class="com.videaps.mindstorms.ral.WaitDelegate"></serviceTask>
-    <sequenceFlow id="flow4" sourceRef="waitForMotors" targetRef="end"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="waitForMotors" targetRef="endWalk"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="parallelgateway1" targetRef="rotateLeftMotor"></sequenceFlow>
     <sequenceFlow id="flow6" sourceRef="parallelgateway1" targetRef="rotateRightMotor"></sequenceFlow>
     <sequenceFlow id="flow7" sourceRef="rotateRightMotor" targetRef="parallelgateway2"></sequenceFlow>
     <sequenceFlow id="flow8" sourceRef="rotateLeftMotor" targetRef="parallelgateway2"></sequenceFlow>
-    <sequenceFlow id="flow9" sourceRef="start" targetRef="parallelgateway1"></sequenceFlow>
+    <sequenceFlow id="flow9" sourceRef="startWalk" targetRef="parallelgateway1"></sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_walk">
     <bpmndi:BPMNPlane bpmnElement="walk" id="BPMNPlane_walk">
-      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+      <bpmndi:BPMNShape bpmnElement="startWalk" id="BPMNShape_startWalk">
         <omgdc:Bounds height="35.0" width="35.0" x="50.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+      <bpmndi:BPMNShape bpmnElement="endWalk" id="BPMNShape_endWalk">
         <omgdc:Bounds height="35.0" width="35.0" x="780.0" y="190.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="rotateLeftMotor" id="BPMNShape_rotateLeftMotor">
