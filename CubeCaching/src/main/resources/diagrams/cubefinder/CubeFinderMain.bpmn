@@ -20,14 +20,14 @@
     </callActivity>
     <sequenceFlow id="flow4" sourceRef="searchForCube" targetRef="clean"></sequenceFlow>
     <sequenceFlow id="flow5" sourceRef="initialise" targetRef="searchForCube"></sequenceFlow>
-    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:long">
+    <dataObject id="xLength" name="xLength" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>60</activiti:value>
+        <activiti:value>100</activiti:value>
       </extensionElements>
     </dataObject>
-    <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:long">
+    <dataObject id="yLength" name="yLength" itemSubjectRef="xsd:string">
       <extensionElements>
-        <activiti:value>60</activiti:value>
+        <activiti:value>100</activiti:value>
       </extensionElements>
     </dataObject>
     <dataObject id="xFraction" name="xFraction" itemSubjectRef="xsd:long">

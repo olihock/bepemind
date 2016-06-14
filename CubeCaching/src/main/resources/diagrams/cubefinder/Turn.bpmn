@@ -9,7 +9,7 @@
           <activiti:string><![CDATA[B]]></activiti:string>
         </activiti:field>
         <activiti:field name="angle">
-          <activiti:expression><![CDATA[${ degrees * 5}]]></activiti:expression>
+          <activiti:expression><![CDATA[${ degrees * 5.5}]]></activiti:expression>
         </activiti:field>
         <activiti:field name="immediateReturn">
           <activiti:expression><![CDATA[${true}]]></activiti:expression>
@@ -22,7 +22,7 @@
           <activiti:string><![CDATA[C]]></activiti:string>
         </activiti:field>
         <activiti:field name="angle">
-          <activiti:expression><![CDATA[${ - ( degrees * 5 ) }]]></activiti:expression>
+          <activiti:expression><![CDATA[${ - ( degrees * 5.5 ) }]]></activiti:expression>
         </activiti:field>
         <activiti:field name="immediateReturn">
           <activiti:expression><![CDATA[${true}]]></activiti:expression>

@@ -18,17 +18,43 @@
 */
 package com.videaps.mindstorms.ev3;
 
+import java.rmi.RemoteException;
+
 import org.junit.Test;
 
 import com.videaps.mindstorms.models.CubeFinder;
+
+import lejos.utility.Delay;
 
 
 public class CubeFinderTest {
 
 	@Test
-	public void run() {
+	public void scan() throws RemoteException {
 		CubeFinder cubeFinder = new CubeFinder();
-		cubeFinder.run();
+		for(int i = 0 ; i < 25; i++) {
+			float distance = cubeFinder.scan();
+			Delay.msDelay(1000);
+			System.out.println("distance="+distance);
+		}
+		cubeFinder.shutdown();
+	}
+	
+	
+	@Test
+	public void searchCube() throws RemoteException {
+		CubeFinder cubeFinder = new CubeFinder();
+		
+		cubeFinder.moveForward();
+		
+		float distance = Float.MAX_VALUE;
+		while(distance >= 0.3f) {
+			distance = cubeFinder.scan();
+			Delay.msDelay(250);
+			System.out.println("distance="+distance);
+		}
+		
+		cubeFinder.stop();
 		cubeFinder.shutdown();
 	}
 	

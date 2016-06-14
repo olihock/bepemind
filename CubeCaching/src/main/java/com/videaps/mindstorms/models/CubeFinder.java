@@ -43,14 +43,14 @@ public class CubeFinder implements IModel {
 	private final int Y_AXIS = 100;
 	private final int X_LEG = 20;
 
-	private RMIRegulatedMotor leftMotor = null; // Port A
-	private RMIRegulatedMotor rightMotor = null; // Port B
+	private RMIRegulatedMotor leftMotor = null; // Port B
+	private RMIRegulatedMotor rightMotor = null; // Port C
 	private RMISampleProvider distanceMeter = null; // Port S1
 	
 	
 	public CubeFinder() {
-		leftMotor = Brick.getInstance().getRegulatedMotor("A");
-		rightMotor = Brick.getInstance().getRegulatedMotor("B");
+		leftMotor = Brick.getInstance().getRegulatedMotor("B");
+		rightMotor = Brick.getInstance().getRegulatedMotor("C");
 		
 		try {
 			leftMotor.setAcceleration(ACCELERATION);
@@ -124,6 +124,14 @@ public class CubeFinder implements IModel {
 	}
 
 	
+	public void moveForward() throws RemoteException {
+		LOGGER.info("");
+		
+		leftMotor.forward();
+		rightMotor.forward();
+	}
+	
+	
 	private void turnLeft() throws RemoteException {
 		LOGGER.info("RIGHT_ANGLE_DEGREES="+RIGHT_ANGLE_DEGREES);
 		
@@ -140,13 +148,13 @@ public class CubeFinder implements IModel {
 	}
 
 
-	private void stop() throws RemoteException {
+	public void stop() throws RemoteException {
 		leftMotor.stop(true);
 		rightMotor.stop(true);
 	}
 
 	
-	private float scan() throws RemoteException {
+	public float scan() throws RemoteException {
 		float distance = distanceMeter.fetchSample()[0];
 		return distance;
 	}
