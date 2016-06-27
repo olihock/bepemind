@@ -1,2 +1,6 @@
-C:\Users\Oliver\Development\github\cubesolving\src\main\java\com\videaps\cube\solving\CubeSolvingApplication.java
-C:\Users\Oliver\Development\github\cubesolving\src\main\java\com\videaps\cube\solving\services\GoToStartPosition.java
+C:\Users\Oliver\Development\github\bepemind\CubeSolving\src\main\java\com\videaps\cube\solving\access\motor\RotaterDelegate.java
+C:\Users\Oliver\Development\github\bepemind\CubeSolving\src\main\java\com\videaps\cube\solving\services\GoToStartPosition.java
+C:\Users\Oliver\Development\github\bepemind\CubeSolving\src\main\java\com\videaps\cube\solving\algorithm\Computer.java
+C:\Users\Oliver\Development\github\bepemind\CubeSolving\src\main\java\com\videaps\cube\solving\access\sensor\ColorPickerDelegate.java
+C:\Users\Oliver\Development\github\bepemind\CubeSolving\src\main\java\com\videaps\cube\solving\CubeSolvingApplication.java
+C:\Users\Oliver\Development\github\bepemind\CubeSolving\src\main\java\com\videaps\cube\solving\algorithm\AlgorithmError.java

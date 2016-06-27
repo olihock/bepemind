@@ -46,23 +46,22 @@ public class RotaterDelegate implements JavaDelegate {
 	private Expression immediateReturnValue;
 	
 	
-	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		NXTRegulatedMotor motor = getMotor((String) motorValue.getValue(execution));
 		
 		if(accelerationValue != null) {
-			motor.setAcceleration((int)accelerationValue.getValue(execution));
+			motor.setAcceleration((Integer) accelerationValue.getValue(execution));
 		}
 
 		int angle = 0;
 		if(angleValue != null) {
-			angle = (int) angleValue.getValue(execution);
+			angle = (Integer) angleValue.getValue(execution);
 		}
 		
 		// Default is waiting for the motor rotation to finish.
 		boolean sync = true;
 		if(immediateReturnValue != null) {
-			sync = (boolean) immediateReturnValue.getValue(execution);
+			sync = (Boolean) immediateReturnValue.getValue(execution);
 		}
 
 		motor.rotate(angle, sync);

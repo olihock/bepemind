@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_-8BUADonEeaPFvVqN3RDiA" exporter="camunda modeler" exporterVersion="2.7.1" targetNamespace="http://activiti.org/bpmn">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="_-8BUADonEeaPFvVqN3RDiA" targetNamespace="http://activiti.org/bpmn" exporter="Camunda Modeler" exporterVersion="1.1.1" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
   <bpmn2:process id="Process_1" isExecutable="false">
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:class="com.videaps.cube.solving.access.MotorDelegate" name="MotorTask">
+    <bpmn2:serviceTask id="ServiceTask_1" name="MotorTask" camunda:class="com.videaps.cube.solving.access.MotorDelegate">
       <bpmn2:extensionElements>
         <camunda:inputOutput>
           <camunda:inputParameter name="motorValue">A</camunda:inputParameter>
@@ -10,11 +10,11 @@
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1" />
     <bpmn2:startEvent id="StartEvent_1">
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="StartEvent_1" targetRef="ServiceTask_1" />
     <bpmn2:endEvent id="EndEvent_1">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
     </bpmn2:endEvent>
@@ -22,32 +22,32 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="ServiceTask_1">
-        <dc:Bounds height="80.0" width="100.0" x="240.0" y="72.0"/>
+        <dc:Bounds x="240" y="72" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="88.0" y="94.0"/>
+        <dc:Bounds x="88" y="94" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="106.0" y="135.0"/>
+          <dc:Bounds x="106" y="135" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="423.0" y="94.0"/>
+        <dc:Bounds x="423" y="94" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="441.0" y="135.0"/>
+          <dc:Bounds x="441" y="135" width="0" height="0" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_EndEvent_2">
-        <di:waypoint xsi:type="dc:Point" x="340.0" y="112.0"/>
-        <di:waypoint xsi:type="dc:Point" x="423.0" y="112.0"/>
+        <di:waypoint xsi:type="dc:Point" x="340" y="112" />
+        <di:waypoint xsi:type="dc:Point" x="423" y="112" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="373.0" y="112.0"/>
+          <dc:Bounds x="373" y="112" width="6" height="6" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_ServiceTask_2">
-        <di:waypoint xsi:type="dc:Point" x="124.0" y="112.0"/>
-        <di:waypoint xsi:type="dc:Point" x="240.0" y="112.0"/>
+        <di:waypoint xsi:type="dc:Point" x="124" y="112" />
+        <di:waypoint xsi:type="dc:Point" x="240" y="112" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="175.0" y="112.0"/>
+          <dc:Bounds x="175" y="112" width="6" height="6" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -50,8 +50,7 @@ public class RotaterDelegateTest {
 	@Test
 	public void constructor() {
 		Object number = new Integer(44);
-		int i = (int) number;
-		System.out.println(i);
+		System.out.println(number);
 	}
 
 }

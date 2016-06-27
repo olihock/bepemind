@@ -51,7 +51,6 @@ public class ColorPickerDelegate implements JavaDelegate {
 	private FixedValue sensorPort;
 	
 	
-	@Override
 	public void execute(DelegateExecution execution) throws Exception {
 		ColorHTSensor sensor = new ColorHTSensor(getSensorPort((String) sensorPort.getValue(execution)));
 		
