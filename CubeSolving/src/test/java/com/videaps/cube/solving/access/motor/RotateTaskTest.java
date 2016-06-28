@@ -18,39 +18,35 @@
 */
 package com.videaps.cube.solving.access.motor;
 
-import static org.junit.Assert.*;
-import lejos.nxt.Motor;
-import lejos.nxt.MotorPort;
-import lejos.nxt.NXTRegulatedMotor;
-import lejos.robotics.RegulatedMotor;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
+import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.task.Task;
+import org.camunda.bpm.engine.test.Deployment;
+import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-
-import com.videaps.cube.solving.access.motor.RotaterDelegate;
-
-import static org.powermock.api.mockito.PowerMockito.*;
 
 
-public class RotaterDelegateTest {
+public class RotateTaskTest {
 
-	RotaterDelegate motor;
-	
-	
-	@Before
-	public void setUp() throws Exception {
-		motor = new RotaterDelegate();
-	}
+	@Rule
+	public ProcessEngineRule processEngineRule = new ProcessEngineRule();
 
-	
+	  
 	@Test
-	public void constructor() {
-		Object number = new Integer(44);
-		System.out.println(number);
-	}
+	@Deployment(resources = { "RotateTask.bpmn" } )
+	public void run() {
+		RuntimeService runtimeService = processEngineRule.getRuntimeService();
+    	runtimeService.startProcessInstanceByKey("Process_Rotate");
 
+    	TaskService taskService = processEngineRule.getTaskService();
+    	Task task = taskService.createTaskQuery().singleResult();
+    	assertEquals("Rotate", task.getName());
+
+    	taskService.complete(task.getId());
+    	assertEquals(0, runtimeService.createProcessInstanceQuery().count());
+	}
+	  
 }

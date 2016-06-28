@@ -40,14 +40,14 @@ import org.camunda.bpm.engine.impl.el.FixedValue;
  */
 public class RotaterDelegate implements JavaDelegate {
 
-	private FixedValue motorValue;
+	private FixedValue motorPortValue;
 	private Expression accelerationValue;
 	private Expression angleValue;
 	private Expression immediateReturnValue;
 	
 	
 	public void execute(DelegateExecution execution) throws Exception {
-		NXTRegulatedMotor motor = getMotor((String) motorValue.getValue(execution));
+		NXTRegulatedMotor motor = getMotor((String) motorPortValue.getValue(execution));
 		
 		if(accelerationValue != null) {
 			motor.setAcceleration((Integer) accelerationValue.getValue(execution));
@@ -68,6 +68,11 @@ public class RotaterDelegate implements JavaDelegate {
 	}
 
 	
+	/**
+	 * Passing in the motor port (A, B or C) returns the static motor as 
+	 * NXT regulated motor. In case anything else is put in, null will be 
+	 * returned.
+	 */
 	private NXTRegulatedMotor getMotor(String motorPort) {
 		if("A".equalsIgnoreCase(motorPort)) {
 			return Motor.A;
